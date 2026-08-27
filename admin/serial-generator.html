@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KasirPro — Serial Generator (Admin)</title>
+  <style>
+    :root {
+      --primary: #1A73E8;
+      --primary-light: #E8F0FE;
+      --secondary: #34A853;
+      --secondary-light: #E6F4EA;
+      --tertiary: #FBBC04;
+      --surface: #ffffff;
+      --background: #F5F7FA;
+      --text-primary: #1A1A1A;
+      --text-secondary: #5F6368;
+      --error: #D93025;
+      --shadow: rgba(0,0,0,0.08);
+    }
+    [data-theme="dark"] {
+      --surface: #1E293B;
+      --background: #0F172A;
+      --text-primary: #F8FAFC;
+      --text-secondary: #CBD5E1;
+      --shadow: rgba(0,0,0,0.3);
+    }
+    * { margin:0; padding:0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', 'Roboto', system-ui, sans-serif;
+      background: var(--background);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .container {
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 4px 24px var(--shadow);
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo { font-size: 28px; }
+    .subtitle { color: var(--text-secondary); font-size:14px; margin-bottom:24px; }
+    label {
+      display:block;
+      font-size:13px;
+      font-weight:600;
+      margin-bottom:6px;
+      color: var(--text-primary);
+    }
+    input[type="text"] {
+      width:100%;
+      padding:12px 14px;
+      border: 2px solid var(--shadow);
+      border-radius:10px;
+      font-size:15px;
+      transition: border-color .2s;
+    }
+    input[type="text"]:focus {
+      outline:none;
+      border-color: var(--primary);
+    }
+    .btn-primary {
+      width:100%;
+      background: var(--primary);
+      color:#fff;
+      border:none;
+      padding:13px;
+      border-radius:10px;
+      font-size:16px;
+      font-weight:600;
+      cursor:pointer;
+      margin-top:16px;
+      transition: background .15s;
+    }
+    .btn-primary:hover { background: var(--secondary); }
+    .btn-secondary {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size:14px;
+      font-weight:600;
+      cursor:pointer;
+      margin-top: 10px;
+    }
+    .result-box {
+      background: var(--primary-light);
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+      margin-top: 20px;
+      border: 1px dashed var(--primary);
+    }
+    .serial {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 3px;
+      font-family: 'Courier New', monospace;
+    }
+    .serial-secondary { color: var(--secondary); }
+    .btn-copy {
+      background: var(--secondary);
+      color:#fff;
+      border:none;
+      padding:8px 16px;
+      border-radius:6px;
+      font-size:13px;
+      margin-top: 10px;
+      cursor:pointer;
+      display: inline-flex;
+      align-items: center;
+      gap:6px;
+    }
+    .btn-copy:hover { opacity:.9; }
+    .history {
+      margin-top:24px;
+    }
+    .history h3 { font-size:16px; margin-bottom:12px; }
+    table {
+      width:100%;
+      border-collapse: collapse;
+      font-size:14px;
+    }
+    th, td {
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--shadow);
+    }
+    th { color: var(--text-secondary); font-size:12px; text-transform: uppercase; }
+    .status-badge {
+      background: var(--secondary-light);
+      color: var(--secondary);
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size:12px;
+      font-weight:600;
+    }
+    .btn-clear {
+      background: var(--error);
+      color:#fff;
+      border:none;
+      padding:8px 14px;
+      border-radius:8px;
+      font-size:13px;
+      cursor:pointer;
+      margin-top:12px;
+    }
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      border: none;
+      padding: 8px 14px;
+      border-radius: 50px;
+      font-size:13px;
+      cursor:pointer;
+    }
+    .error-msg {
+      background: #FCE8E6;
+      color: var(--error);
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 14px;
+      font-size: 14px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-toggle" onclick="toggleTheme()">🌓 Theme</div>
+
+  <div class="container">
+    <div class="card">
+      <!-- Header -->
+      <h1><span class="logo">🖼️</span> KasirPro Serial Generator</h1>
+      <p class="subtitle">Generate Serial Number dari Device ID untuk aktivasi aplikasi.</p>
+
+      <!-- Device ID Input -->
+      <label for="deviceId">Device ID <small style="color:var(--text-secondary);font-weight:400">(contoh: A7K3P9Q2)</small></label>
+      <input type="text" id="deviceId" maxlength="8" placeholder="Masukkan Device ID (8 karakter uppercase)" />
+
+      <!-- Generate Button -->
+      <button class="btn-primary" onclick="generateSerial()">🔑 Generate Serial</button>
+
+      <!-- Error message (hidden by default) -->
+      <div id="errorMsg" class="error-msg" style="display:none"></div>
+
+      <!-- Result -->
+      <div id="resultBox" class="result-box" style="display:none">
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:6px">✅ Serial Number</p>
+        <p class="serial" id="serialOutput">XXXXXXXX</p>
+        <p style="margin-top:8px;color:var(--text-secondary);font-size:12px">Share ini dengan reseller untuk di-input di aplikasi.</p>
+      </div>
+
+      <!-- History -->
+      <div class="history">
+        <h3>📜 Riwayat</h3>
+        <div id="historyList" style="max-height:220px;overflow-y:auto">
+          <p style="color:var(--text-secondary);font-size:13px">Belum ada riwayat</p>
+        </div>
+        <button class="btn-clear" onclick="clearHistory()">🗑️ Clear History</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SALT = "KasirProSalt2024";
+
+    // Theme
+    function toggleTheme() {
+      const cur = localStorage.getItem("theme") || "light";
+      const next = cur === "light" ? "dark" : "light";
+      document.body.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+    }
+    // init theme on load
+    (function initTheme() {
+      const theme = localStorage.getItem("theme") || "light";
+      document.body.setAttribute("data-theme", theme);
+    })();
+
+    // SHA-256 → 8 alphanumeric uppercase serial
+    async function sha256(str) {
+      const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+      const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+      // Take 8 chars from the middle of the hex digest → ensures alphanumeric variety
+      const slice = hex.slice(8, 16);
+      // Convert hex to a base36-ish alphanumeric (uppercase A-Z0-9)
+      let num = parseInt(slice, 16);
+      let serial = "";
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      for (let i = 0; i < 8; i++) {
+        serial = chars[num % chars.length] + serial;
+        num = Math.floor(num / chars.length);
+        if (num === 0) break;
+      }
+      // Ensure at least 8 chars
+      while (serial.length < 8) serial = "A" + serial;
+      return serial.substring(0, 8);
+    }
+
+    async function generateSerial() {
+      const deviceId = document.getElementById("deviceId").value.trim().toUpperCase();
+      const errorMsg = document.getElementById("errorMsg");
+      const resultBox = document.getElementById("resultBox");
+
+      if (!deviceId || deviceId.length !== 8) {
+        errorMsg.textContent = "⚠️ Device ID harus tepat 8 karakter!";
+        errorMsg.style.display = "block";
+        resultBox.style.display = "none";
+        return;
+      }
+      errorMsg.style.display = "none";
+
+      // Generate: SHA256(deviceId + salt) → 8-char serial
+      const serial = await sha256(deviceId + SALT);
+
+      document.getElementById("serialOutput").textContent = serial;
+      document.getElementById("serialOutput").className = "serial";
+      resultBox.style.display = "block";
+
+      // Save to history (localStorage)
+      const history = JSON.parse(localStorage.getItem("kasirpro_serial_history") || "[]");
+      history.unshift({ deviceId, serial, date: new Date().toISOString() });
+      if (history.length > 50) history.pop();
+      localStorage.setItem("kasirpro_serial_history", JSON.stringify(history));
+      renderHistory();
+    }
+
+    function copySerial() {
+      const serial = document.getElementById("serialOutput").textContent;
+      if (serial && serial !== "XXXXXXXX") {
+        navigator.clipboard.writeText(serial).then(() => {
+          alert("✅ Serial berhasil disalin: " + serial);
+        });
+      }
+    }
+
+    function renderHistory() {
+      const history = JSON.parse(localStorage.getItem("kasirpro_serial_history") || "[]");
+      const list = document.getElementById("historyList");
+      if (!history.length) {
+        list.innerHTML = '<p style="color:var(--text-secondary);font-size:13px">Belum ada riwayat</p>';
+        return;
+      }
+      let html = "<table><tr><th>Tanggal</th><th>Device ID</th><th>Serial</th><th>Aksi</th></tr>";
+      history.forEach(h => {
+        html += `<tr>
+          <td>${new Date(h.date).toLocaleString('id-ID')}</td>
+          <td><strong>${h.deviceId}</strong></td>
+          <td>${h.serial}</td>
+          <td><button class="btn-secondary" style="padding:4px 10px;font-size:12px" onclick="copySerialFromHistory('${h.serial}')">Salin</button></td>
+        </tr>`;
+      });
+      html += "</table>";
+      list.innerHTML = html;
+    }
+
+    function copySerialFromHistory(serial) {
+      navigator.clipboard.writeText(serial).then(() => alert("✅ Disalin: " + serial));
+    }
+
+    function clearHistory() {
+      localStorage.removeItem("kasirpro_serial_history");
+      renderHistory();
+    }
+
+    // Render history on load
+    renderHistory();
+
+    // Allow Enter key in Device ID field to trigger generate
+    document.getElementById("deviceId").addEventListener("keypress", e => {
+      if (e.key === "Enter") generateSerial();
+    });
+  </script>
+</body>
+</html>

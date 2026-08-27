@@ -1,0 +1,57 @@
+# Android
+*.apk
+*.aab
+*.ap_
+*.aab
+*.apks
+*.jar
+*.war
+*.ear
+captures/
+.externalNativeBuild/
+.cxx/
+.gradle/
+local.properties
+proguard/
+captures/
+.output.json*
+
+# Gradle
+.gradle/
+build/
+app/build/
+app/.cxx/
+gradle/
+
+# Local configuration
+local.properties
+
+# Proguard
+proguard_logs/
+
+# Android Studio
+/.idea/
+*.iml
+*.iws
+*.ipr
+.DS_Store
+**/ .DS_Store
+
+# Keystore
+*.jks
+*.keystore
+
+# External native build
+ externalNativeBuild/
+
+# CMake
+cmake**/ 
+
+# Fastlane
+fastlane/report.xml
+fastlane/test_output
+
+# Version control
+*.war
+*.ear
+*.jar

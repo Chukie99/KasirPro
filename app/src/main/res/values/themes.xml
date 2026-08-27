@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- ===== KasirPro Themes — Material Design 3 ===== -->
+
+    <!-- Splash / activation theme (no action bar) -->
+    <style name="Theme.KasirPro.Splash" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="windowSplashScreenBackground">@color/primary</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.KasirPro</item>
+        <item name="windowLightStatusBar">false</item>
+    </style>
+
+    <!-- Main theme — Material 3 with custom color scheme -->
+    <style name="Theme.KasirPro" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary / secondary / tertiary (MD3 color roles) -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/surface</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorSecondaryVariant">@color/secondary_light</item>
+        <item name="colorOnSecondary">@color/surface</item>
+        <item name="colorTertiary">@color/tertiary</item>
+        <item name="colorOnTertiary">@color/surface</item>
+
+        <!-- Surfaces -->
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+        <item name="colorSurfaceVariant">@color/surface_variant</item>
+        <item name="colorOutline">@color/outline</item>
+
+        <!-- Error / status -->
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/surface</item>
+
+        <!-- Backgrounds -->
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:navigationBarColor">@color/surface</item>
+
+        <!-- Typography overrides for Roboto -->
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="fontFamily">sans-serif</item>
+        <item name="textAppearanceHeadlineLarge">?attr/textAppearanceHeadlineLarge</item>
+        <item name="textAppearanceTitleLarge">?attr/textAppearanceTitleLarge</item>
+        <item name="textAppearanceBodyLarge">?attr/textAppearanceBodyLarge</item>
+
+        <!-- Elevation / shapes -->
+        <item name="elevatedSurfaceElevation">1dp</item>
+        <item name="elevatedSurfaceShadowColor">@color/shadow</item>
+    </style>
+
+    <!-- Light variant (optional future use) -->
+    <style name="Theme.KasirPro.Light" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/surface</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorTertiary">@color/tertiary</item>
+        <item name="android:windowBackground">@color/surface</item>
+    </style>
+
+    <!-- Typography styles -->
+    <style name="TextAppearance.KasirPro.Heading" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="TextAppearance.KasirPro.Body" parent="TextAppearance.Material3.BodyLarge">
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextAppearance.KasirPro.Small" parent="TextAppearance.Material3.BodySmall">
+        <item name="fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+</resources>

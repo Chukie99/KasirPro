@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KasirPro</string>
+    <string name="app_version">v1.0.0</string>
+    <string name="app_copyright">© 2025 KasirPro. All rights reserved.</string>
+    <string name="app_developer">Developed by Chukie99</string>
+
+    <!-- Splash / Activation -->
+    <string name="activation_title">Aktivasi Aplikasi</string>
+    <string name="activation_instructions">Kirim Device ID ke Admin untuk mendapatkan Serial Number</string>
+    <string name="activation_hint">Masukkan Serial Number</string>
+    <string name="activation_button">Aktifkan</string>
+    <string name="activation_success">Aktivasi berhasil! Selamat datang di KasirPro.</string>
+    <string name="activation_invalid">Serial Number tidak valid!</string>
+    <string name="activation_empty_device_id">Device ID kosong, coba restart aplikasi.</string>
+    <string name="activation_copy_device_id">Salin Device ID</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_title">Dashboard</string>
+    <string name="search_products">Cari produk…</string>
+    <string name="filter_all">Semua</string>
+    <string name="filter_food">Makanan</string>
+    <string name="filter_drink">Minuman</string>
+    <string name="filter_snack">Snack</string>
+    <string name="stock_out">Habis</string>
+    <string name="stock_remaining">%1$d tersisa</string>
+
+    <!-- Products -->
+    <string name="product_title">Produk</string>
+    <string name="add_product">Tambah Produk</string>
+    <string name="product_name_hint">Nama produk</string>
+    <string name="product_price_hint">Harga (Rp)</string>
+    <string name="product_stock_hint">Stok</string>
+    <string name="product_category_hint">Kategori</string>
+    <string name="product_image">Gambar Produk</string>
+    <string name="product_edit">Edit Produk</string>
+    <string name="product_delete_confirm">Yakin hapus produk ini?</string>
+    <string name="product_save">Simpan</string>
+    <string name="product_cancel">Batal</string>
+
+    <!-- Tables -->
+    <string name="table_title">Meja</string>
+    <string name="table_add">Tambah Meja</string>
+    <string name="table_number_hint">Nomor meja</string>
+    <string name="table_capacity_hint">Kapasitas (1-10)</string>
+    <string name="table_status_empty">Kosong</string>
+    <string name="table_status_occupied">Terisi</string>
+    <string name="table_status_reserved">Reservasi</string>
+    <string name="table_delete_occupied">Meja sedang dipakai, tidak bisa dihapus.</string>
+
+    <!-- Transactions -->
+    <string name="transaction_title">Transaksi</string>
+    <string name="transaction_select_table">Pilih meja</string>
+    <string name="transaction_payment_cash">Cash</string>
+    <string name="transaction_payment_qris">QRIS</string>
+    <string name="transaction_payment_transfer">Transfer</string>
+    <string name="transaction_discount">Diskon</string>
+    <string name="transaction_tax">Pajak (%)</string>
+    <string name="transaction_subtotal">Subtotal</string>
+    <string name="transaction_total">Total</string>
+    <string name="transaction_pay_button">Bayar</string>
+    <string name="transaction_confirm">Konfirmasi Pembayaran</string>
+    <string name="transaction_success">Transaksi berhasil!</string>
+    <string name="transaction_empty_cart">Keranjang kosong.</string>
+    <string name="transaction_no_table">Pilih meja dulu!</string>
+
+    <!-- Reports -->
+    <string name="report_title">Laporan</string>
+    <string name="report_daily">Harian</string>
+    <string name="report_weekly">Mingguan</string>
+    <string name="report_monthly">Bulanan</string>
+    <string name="report_total_sales">Total Penjualan</string>
+    <string name="report_total_transactions">Jumlah Transaksi</string>
+    <string name="report_top_products">Produk Terlaris</string>
+    <string name="report_top_tables">Meja Terlaris</string>
+    <string name="report_export_csv">Export CSV</string>
+    <string name="report_export_success">Export berhasil!</string>
+    <string name="report_no_data">Tidak ada data.</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Pengaturan</string>
+    <string name="settings_store_profile">Profil Toko</string>
+    <string name="settings_store_name">Nama Toko</string>
+    <string name="settings_store_address">Alamat</string>
+    <string name="settings_store_phone">Telepon</string>
+    <string name="settings_tax_rate">Pajak Default (%)</string>
+    <string name="settings_default_discount">Diskon Default (%)</string>
+    <string name="settings_printer">Printer</string>
+    <string name="settings_scan_bluetooth">Scan Bluetooth Printer</string>
+    <string name="settings_backup">Backup Database</string>
+    <string name="settings_restore">Restore Database</string>
+    <string name="settings_backup_drive">Backup ke Google Drive</string>
+    <string name="settings_restore_select">Pilih file .db</string>
+    <string name="settings_backup_success">Backup berhasil!</string>
+    <string name="settings_about">Tentang</string>
+
+    <!-- Misc -->
+    <string name="cancel">Batal</string>
+    <string name="save">Simpan</string>
+    <string name="delete">Hapus</string>
+    <string name="edit">Edit</string>
+    <string name="ok">OK</string>
+    <string name="loading">Memuat…</string>
+    <string name="error_generic">Terjadi kesalahan. Coba lagi nanti.</string>
+
+    <!-- Navigation (bottom bar) -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_transaction">Transaksi</string>
+    <string name="nav_report">Laporan</string>
+    <string name="nav_settings">Pengaturan</string>
+</resources>
