@@ -1,0 +1,12 @@
+﻿2026-08-27T23:47:30.8623903Z ##[group]Run ./gradlew assembleRelease --no-daemon --stacktrace
+2026-08-27T23:47:30.8624286Z [36;1m./gradlew assembleRelease --no-daemon --stacktrace[0m
+2026-08-27T23:47:30.8658553Z shell: /usr/bin/bash -e {0}
+2026-08-27T23:47:30.8658764Z env:
+2026-08-27T23:47:30.8659015Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-08-27T23:47:30.8659394Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-08-27T23:47:30.8659710Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-08-27T23:47:30.8659953Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-08-27T23:47:30.8660177Z ##[endgroup]
+2026-08-27T23:47:30.9207957Z ##[error]Exception in thread "main" java.lang.RuntimeException: Wrapper properties file '/home/runner/work/KasirPro/KasirPro/gradle/wrapper/gradle-wrapper.properties' does not exist.
+2026-08-27T23:47:30.9209525Z 	at org.gradle.wrapper.GradleWrapperMain.main(SourceFile:74)
+2026-08-27T23:47:30.9248340Z ##[error]Process completed with exit code 1.

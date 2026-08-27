@@ -1,0 +1,16 @@
+﻿2026-08-27T23:48:55.1355919Z ##[group]Run mkdir -p gradle/wrapper
+2026-08-27T23:48:55.1356415Z [36;1mmkdir -p gradle/wrapper[0m
+2026-08-27T23:48:55.1356942Z [36;1mif [ ! -f gradle/wrapper/gradle-wrapper.jar ]; then[0m
+2026-08-27T23:48:55.1357478Z [36;1m  curl -L -o gradle/wrapper/gradle-wrapper.jar \[0m
+2026-08-27T23:48:55.1358162Z [36;1m    https://raw.githubusercontent.com/gradle/gradle/v8.10.2/gradle/wrapper/gradle-wrapper.jar[0m
+2026-08-27T23:48:55.1359093Z [36;1mfi[0m
+2026-08-27T23:48:55.1400492Z shell: /usr/bin/bash -e {0}
+2026-08-27T23:48:55.1401240Z env:
+2026-08-27T23:48:55.1402294Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-08-27T23:48:55.1403493Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-08-27T23:48:55.1404056Z ##[endgroup]
+2026-08-27T23:48:55.1943711Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+2026-08-27T23:48:55.1944230Z                                  Dload  Upload   Total   Spent    Left  Speed
+2026-08-27T23:48:55.1944787Z 
+2026-08-27T23:48:55.2729429Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-08-27T23:48:55.2730010Z 100 43583  100 43583    0     0   541k      0 --:--:-- --:--:-- --:--:--  545k
