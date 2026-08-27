@@ -1,0 +1,64 @@
+# Auto-build & release KasirPro APK — triggered on every version tag (v*)
+
+name: build-apk
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build release APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Download Gradle wrapper jar
+        # Our gradlew script needs gradle-wrapper.jar to bootstrap;
+        # grab a minimal shim so ./gradlew works.
+        run: |
+          mkdir -p gradle/wrapper
+          if [ ! -f gradle/wrapper/gradle-wrapper.jar ]; then
+            curl -L -o gradle/wrapper/gradle-wrapper.jar \
+              https://raw.githubusercontent.com/gradle/gradle/v8.10.2/gradle/wrapper/gradle-wrapper.jar
+          fi
+
+      - name: Setup Android SDK  (API 34 + build-tools)
+        uses: android-actions/setup-android@v3
+        with:
+          api-level: 34
+          build-tools-version: '34.0.0'
+
+      - name: Build release APK
+        run: ./gradlew assembleRelease --no-daemon --stacktrace
+
+      - name: Locate APK
+        id: apk
+        run: |
+          APK=$(find app/build/outputs/apk/release -name "*.apk" -print -quit)
+          echo "apk=$APK" >> $GITHUB_OUTPUT
+          echo "basename=$(basename "$APK")" >> $GITHUB_OUTPUT
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kasirpro-${{ github.ref_name }}
+          path: ${{ steps.apk.outputs.apk }}
+
+      - name: Create / publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.apk.outputs.apk }}
+          title: Release ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
