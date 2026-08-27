@@ -1,6 +1,7 @@
 package com.kasirpro.data.repository
 
 import com.kasirpro.data.database.AppDatabase
+import com.kasirpro.data.database.TransactionDao
 import com.kasirpro.data.model.Product
 import com.kasirpro.data.model.Table
 import com.kasirpro.data.model.TransactionEntity

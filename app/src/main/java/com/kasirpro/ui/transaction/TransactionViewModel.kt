@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.kasirpro.data.model.Setting
 import com.kasirpro.data.model.Table
 import com.kasirpro.data.model.TransactionEntity
+import com.kasirpro.data.model.TransactionItem
 import com.kasirpro.data.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -125,7 +126,7 @@ class TransactionViewModel @Inject constructor(
 
         val itemsJson = com.google.gson.GsonBuilder().create()
             .toJson(s.cart.map {
-                TransactionEntity.TransactionItemCompat(
+                TransactionItem(
                     productId = it.productId,
                     productName = it.product.name,
                     quantity = it.quantity,
