@@ -51,6 +51,12 @@ android {
     lint {
         abortOnError false
     }
+
+    applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach {
+            outputFileName = "KasirPro-v${variant.versionName}-${variant.buildType.name}.apk"
+        }
+    }
 }
 
 dependencies {
