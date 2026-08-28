@@ -1,14 +1,16 @@
 package com.kasirpro.ui.transaction
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -16,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.LocalTextColor
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -164,7 +167,7 @@ fun CartItemRow(item: CartItem, onQtyChange: (Int) -> Unit, onDelete: () -> Unit
             Text(CurrencyFormatter.formatRupiah(item.subtotal), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
         }
         Icon(
-            imageVector = androidx.compose.material.icons.Icons.Default.Delete,
+            imageVector = Icons.Default.Delete,
             contentDescription = "Delete",
             tint = MaterialTheme.colorScheme.error,
             modifier = Modifier.clickable(onClick = onDelete),
@@ -176,7 +179,7 @@ fun CartItemRow(item: CartItem, onQtyChange: (Int) -> Unit, onDelete: () -> Unit
 @Composable
 fun RadioButtonRow(label: String, selected: Boolean, onSelect: () -> Unit) {
     Row(Modifier.clickable(onSelect).padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-        RadioButton(selected = selected, onClick = onSelect, colors = RadioButtonDefaults.radioButtonColors(selected = MaterialTheme.colorScheme.primary))
+            RadioButton(selected = selected, onClick = onSelect, colors = RadioButtonDefaults.defaultRadioButtonColors(selected = MaterialTheme.colorScheme.primary))
         Text(label)
     }
 }

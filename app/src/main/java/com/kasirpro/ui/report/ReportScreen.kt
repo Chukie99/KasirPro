@@ -8,14 +8,16 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FileDownload
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -44,7 +46,7 @@ fun ReportScreen(
         floatingActionButton = {
             FloatingActionButton(onClick = { exportCSV(state, context) }) {
                 Icon(
-                    imageVector = androidx.compose.material.icons.Icons.Default.FileDownload,
+                    imageVector = Icons.Default.FileDownload,
                     contentDescription = "Export CSV",
                     tint = MaterialTheme.colorScheme.onPrimary,
                 )
@@ -122,21 +124,8 @@ fun BarChart(entries: List<BarEntry>, modifier: Modifier = Modifier) {
                     drawRect(
                         color = barColor,
                         topLeft = Offset(x, yTop),
-                        size = androidx.compose.ui.geometry.Size(barWidth, barHeight)
+                        size = Size(barWidth, barHeight)
                     )
-                    // value label at top
-                    drawContext.canvas.nativeCanvas.apply {
-                        drawText(
-                            "${e.value.toInt()}",
-                            x + barWidth / 2,
-                            yTop - 8f,
-                            android.graphics.Paint().apply {
-                                textSize = 32f
-                                textAlign = android.graphics.Paint.Align.CENTER
-                                color = android.graphics.Color.BLACK
-                            }
-                        )
-                    }
                 }
                 // x-axis line
                 drawLine(axisColor, Offset(0f, size.height), Offset(size.width, size.height), strokeWidth = 2f)

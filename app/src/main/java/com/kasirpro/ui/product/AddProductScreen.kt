@@ -8,10 +8,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -88,7 +91,7 @@ fun AddProductScreen(
             // Category dropdown
             var expanded by remember { mutableStateOf(false) }
             Box(Modifier.fillMaxWidth()) {
-                OutlinedTextField(value = category, onValueChange = {}, readOnly = true, label = { Text("Kategori") }, modifier = Modifier.fillMaxWidth(), trailingIcon = { Icon(androidx.compose.material.icons.Icons.Default.ArrowDropDown, contentDescription = null) }, onClick = { expanded = true })
+                OutlinedTextField(value = category, onValueChange = {}, readOnly = true, label = { Text("Kategori") }, modifier = Modifier.fillMaxWidth(), trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null) }, onClick = { expanded = true })
                 DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                     listOf("Makanan", "Minuman", "Snack").forEach { c ->
                         DropdownMenuItem(onClick = { category = c; expanded = false }) { Text(c) }

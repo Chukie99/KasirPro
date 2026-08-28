@@ -1,5 +1,7 @@
 package com.kasirpro.ui.main
 
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -15,14 +17,12 @@ import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material.icons.filled.assessment
+import androidx.compose.material.icons.filled.Analytics
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.graphics.vector.ImageVector
 import com.kasirpro.R
 
 /**
- * MainActivity — hosts BottomNavigation with 4 tabs:
+ * MainScreen — hosts BottomNavigation with 4 tabs:
  * Dashboard, Transaksi, Laporan, Pengaturan
  */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,7 +36,7 @@ fun MainScreen() {
         BottomNavItem(stringResource(R.string.nav_transaction), Icons.Default.ShoppingCart) {
             navController.navigate("transaction") { launchSingleTop = true; restoreState = true }
         },
-        BottomNavItem(stringResource(R.string.nav_report), Icons.Default.assessment) {
+        BottomNavItem(stringResource(R.string.nav_report), Icons.Default.Analytics) {
             navController.navigate("report") { launchSingleTop = true; restoreState = true }
         },
         BottomNavItem(stringResource(R.string.nav_settings), Icons.Default.Settings) {

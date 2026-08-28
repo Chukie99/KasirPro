@@ -3,8 +3,10 @@ package com.kasirpro.ui.theme
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.isSystemInDarkTheme
+import androidx.compose.runtime.SideEffect
 
-// ── KasirPro Blue-Pastel Color Scheme (Google Blue, NOT Purple) ───────────────
+// ── KasirPro Blue-Pastel Color Scheme (Google Blue, NOT Purple) ────────────────
 private val LightColors = lightColorScheme(
     primary = Color(0xFF1A73E8),        // primary
     onPrimary = Color(0xFFFFFFFF),
@@ -56,19 +58,5 @@ fun Theme(
         colorScheme = colors,
         typography = Typography(),
         content = content,
-    )
-}
-
-private fun Typography(): Typography {
-    return Typography(
-        headlineLarge = headlineLarge,
-        headlineMedium = headlineMedium,
-        headlineSmall = headlineSmall,
-        titleLarge = titleLarge,
-        titleMedium = titleMedium,
-        titleSmall = titleSmall,
-        bodyLarge = bodyLarge,
-        bodyMedium = bodyMedium,
-        bodySmall = bodySmall,
     )
 }
