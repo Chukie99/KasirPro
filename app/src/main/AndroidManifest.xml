@@ -28,8 +28,7 @@
         android:icon="@drawable/ic_launcher"
         android:roundIcon="@drawable/ic_launcher_round"
         android:label="@string/app_name"
-        android:theme="@style/Theme.KasirPro"
-        android:export="true">
+        android:theme="@style/Theme.KasirPro">
 
         <!-- Splash screen (Android 12+ auto-splash, fallback below) -->
         <activity
