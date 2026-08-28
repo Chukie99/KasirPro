@@ -8,8 +8,6 @@ import com.kasirpro.data.model.TransactionEntity
 import com.kasirpro.data.model.TransactionItem
 import com.kasirpro.data.model.Setting
 import com.google.gson.GsonBuilder
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 /**
  * Repository — single source of truth for all data.

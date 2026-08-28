@@ -217,7 +217,11 @@ class BluetoothManager(private val context: Context) {
         val filter = IntentFilter(BluetoothDevice.ACTION_FOUND).apply {
             addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
         }
-        context.registerReceiver(discoveryReceiver, filter)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.registerReceiver(discoveryReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+        } else {
+            context.registerReceiver(discoveryReceiver, filter)
+        }
 
         val timeout = handler.postDelayed({
             tearDownReceiver()

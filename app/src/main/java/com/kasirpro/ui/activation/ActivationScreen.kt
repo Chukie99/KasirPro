@@ -95,7 +95,7 @@ fun ActivationScreen(
             OutlinedTextField(
                 value = state.serialInput,
                 onValueChange = { if (it.length <= 8) viewModel.onSerialChange(it) },
-                label = { Text("Masukkan Serial Number (6-8 karakter)") },
+                label = { Text("Masukkan Serial Number (8 karakter)") },
                 singleLine = true,
                 isError = state.errorMessage?.isNotEmpty() == true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),

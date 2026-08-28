@@ -101,8 +101,8 @@ fun TransactionScreen(
                 SummaryRow("Subtotal", CurrencyFormatter.formatRupiah(state.subtotal))
                 SummaryRow("Pajak ${state.taxPercent.toInt()}%", CurrencyFormatter.formatRupiah(state.taxAmount))
                 SummaryRow("Diskon", "-${CurrencyFormatter.formatRupiah(state.discountAmount)}")
-                Divider(Modifier.padding(vertical = 8.dp))
-                SummaryRow("TOTAL", CurrencyFormatter.formatRupiah(state.grandTotal), isBold = true, Color = MaterialTheme.colorScheme.primary)
+                HorizontalDivider(Modifier.padding(vertical = 8.dp))
+                SummaryRow("TOTAL", CurrencyFormatter.formatRupiah(state.grandTotal), isBold = true, color = MaterialTheme.colorScheme.primary)
             }
 
             // Pay button
@@ -183,21 +183,21 @@ fun CartItemRow(item: CartItem, onQtyChange: (Int) -> Unit, onDelete: () -> Unit
             modifier = Modifier.clickable(onClick = onDelete),
         )
     }
-    Divider()
+    HorizontalDivider()
 }
 
 @Composable
 fun RadioButtonRow(label: String, selected: Boolean, onSelect: () -> Unit) {
-    Row(Modifier.clickable(onSelect).padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-        RadioButton(selected = selected, onClick = onSelect, colors = RadioButtonDefaults.radioButtonColors(selectedColor = MaterialTheme.colorScheme.primary))
+    Row(Modifier.clickable { onSelect() }.padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+        RadioButton(selected = selected, onClick = onSelect, colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colorScheme.primary))
         Text(label)
     }
 }
 
 @Composable
-fun SummaryRow(label: String, value: String, isBold: Boolean = false, Color: Color = MaterialTheme.colorScheme.onSurface) {
+fun SummaryRow(label: String, value: String, isBold: Boolean = false, color: Color = MaterialTheme.colorScheme.onSurface) {
     Row(Modifier.fillMaxWidth().padding(vertical = 2.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-        Text(label, fontWeight = if (isBold) FontWeight.Bold else FontWeight.Normal, color = Color)
-        Text(value, fontWeight = if (isBold) FontWeight.Bold else FontWeight.Normal, color = Color)
+        Text(label, fontWeight = if (isBold) FontWeight.Bold else FontWeight.Normal, color = color)
+        Text(value, fontWeight = if (isBold) FontWeight.Bold else FontWeight.Normal, color = color)
     }
 }

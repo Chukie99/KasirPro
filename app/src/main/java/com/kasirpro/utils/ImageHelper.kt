@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import androidx.activity.result.contract.ActivityResultContracts
 import java.io.File
 import java.io.FileOutputStream
 
@@ -62,7 +61,4 @@ object ImageHelper {
         }
         return size
     }
-
-    /** Launcher to pick an image from gallery (call from an Activity Result API). */
-    val galleryPicker = ActivityResultContracts.GetContent()
 }

@@ -2,8 +2,6 @@ package com.kasirpro.ui.settings
 
 import android.content.Intent
 import android.net.Uri
-import android.provider.OpenableColumns
-import android.view.View
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
@@ -19,7 +17,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.kasirpro.R
 import com.kasirpro.utils.BackupHelper
 import com.kasirpro.utils.DeviceIdHelper
 
@@ -100,7 +97,7 @@ fun SettingsScreen(
             // ── Tentang ──
             SettingsSection("Tentang") {
                 Text("KasirPro ${state.version}", fontWeight = FontWeight.Bold)
-                Text("© 2025 Chukie99")
+                Text("© 2026 Chukie99")
             }
 
             // Save button (sticky at bottom)

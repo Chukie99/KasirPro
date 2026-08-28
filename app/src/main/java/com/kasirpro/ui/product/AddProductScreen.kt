@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -62,7 +63,13 @@ fun AddProductScreen(
                     viewModel.addProduct(name, p, s, category, imagePath)
                     onProductSaved()
                 }
-            }) { Text("💾") }
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Save,
+                    contentDescription = "Simpan",
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                )
+            }
         },
     ) { padding ->
         Column(modifier = modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(16.dp)) {
@@ -109,7 +116,10 @@ fun AddProductScreen(
                     onDismissRequest = { expanded = false },
                 ) {
                     listOf("Makanan", "Minuman", "Snack").forEach { c ->
-                        DropdownMenuItem(onClick = { category = c; expanded = false }) { Text(c) }
+                        DropdownMenuItem(
+                            text = { Text(c) },
+                            onClick = { category = c; expanded = false },
+                        )
                     }
                 }
             }

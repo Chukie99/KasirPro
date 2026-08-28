@@ -32,8 +32,9 @@
 -keep class coil.** { *; }
 -keep class coil.compose.** { *; }
 
-# ── escpos printer �iques ──────────────────────────────────────────────────────
--keep class com.github.iammert.** { *; }
+# ── Apache Commons CSV ────────────────────────────────────────────────────────
+-keep class org.apache.commons.csv.** { *; }
 
-# ── MPAndroidChart ────────────────────────────────────────────────────────────
--keep class com.github.mikephil.charting.** { *; }
+# ── ML Kit (barcode scanning) ────────────────────────────────────────────────
+-keep class com.google.mlkit.** { *; }
+-keep class com.google.android.gms.internal.mlkit_vision_barcode.** { *; }

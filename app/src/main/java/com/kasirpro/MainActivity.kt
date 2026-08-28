@@ -1,11 +1,9 @@
 package com.kasirpro
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.*
-import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.kasirpro.ui.activation.ActivationScreen
 import com.kasirpro.ui.activation.SplashScreen
@@ -24,7 +22,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Install system splash (Android 12+ native, graceful fallback <31)
         installSplashScreen()
 
         // Pre-compute device ID (cheap, cached)
@@ -33,8 +30,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             Theme {
                 var showSplash by remember { mutableStateOf(true) }
-                val isActivated =
-                    devicePrefs.getBoolean("kasirpro_activated", false)
+                var isActivated by remember {
+                    mutableStateOf(devicePrefs.getBoolean("kasirpro_activated", false))
+                }
 
                 if (showSplash && !isActivated) {
                     // Splash → Activation
@@ -44,7 +42,7 @@ class MainActivity : ComponentActivity() {
                 } else if (!isActivated) {
                     // Activation screen
                     ActivationScreen(onActivated = {
-                        showSplash = false
+                        isActivated = true
                     })
                 } else {
                     // App is activated → Main dashboard

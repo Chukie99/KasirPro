@@ -26,7 +26,6 @@ class TableViewModel @Inject constructor(private val repo: Repository) : ViewMod
 
     fun addTable(number: String, capacity: Int) {
         viewModelScope.launch {
-            val existing = repo.getTable(0L) // we need getTableByNumber — but DAO doesn't expose; use try insert
             try {
                 repo.addTable(Table(number = number, capacity = capacity))
                 load()

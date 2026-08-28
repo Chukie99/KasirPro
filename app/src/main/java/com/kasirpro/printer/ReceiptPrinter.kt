@@ -63,7 +63,7 @@ object ReceiptPrinter {
         )
 
         val success = try {
-            socket.outputStream?.write(receipt.toByteArray(StandardCharsets.US_ASCII))
+            socket.outputStream?.write(receipt.toByteArray(StandardCharsets.ISO_8859_1))
             true
         } catch (_: Exception) {
             false
@@ -98,10 +98,8 @@ object ReceiptPrinter {
         sb.append(center(storeName) + "\n")
         sb.append(center(storeAddress.takeIf { it.isNotBlank() } ?: "-") + "\n")
         sb.append(center(storePhone.takeIf { it.isNotBlank() } ?: "-") + "\n")
-        sb.append("Tel: " + (storePhone.takeIf { it.isNotBlank() } ?: "-") + "\n")
         sb.append("--------------------------------\n")
         sb.append("Tanggal: " + DateFormatter.formatDateTime(timestamp) + "\n")
-        sb.append("Meja: -\n")
         sb.append("--------------------------------\n")
         // Items
         items.forEach { item ->

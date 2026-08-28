@@ -61,7 +61,7 @@ class ReportViewModel @Inject constructor(
 
                 // Top products (count appearances in items)
                 val productMap = mutableMapOf<String, Int>()
-                val gson = com.google.gson.Gson()
+                val gson = com.google.gson.GsonBuilder().create()
                 for (tx in txs) {
                     try {
                         val items = gson.fromJson(tx.itemsJson, Array<com.kasirpro.data.model.TransactionItem>::class.java)
@@ -85,7 +85,7 @@ class ReportViewModel @Inject constructor(
                 // Chart: daily bars (group by day)
                 val dayMap = mutableMapOf<Long, Long>()
                 txs.forEach { tx ->
-                    val day = tx.createdAt / (24 * 3600 * 1000) * (24 * 3600 * 1000)
+                    val day = tx.createdAt / (24L * 3600 * 1000) * (24L * 3600 * 1000)
                     dayMap[day] = dayMap.getOrDefault(day, 0L) + tx.total
                 }
                 val chartEntries = dayMap.entries.sortedBy { it.key }.take(7)

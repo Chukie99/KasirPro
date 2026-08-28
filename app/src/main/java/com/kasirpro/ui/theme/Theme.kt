@@ -1,10 +1,10 @@
 package com.kasirpro.ui.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
-import androidx.compose.runtime.isSystemInDarkTheme
 
 // ── KasirPro Blue-Pastel Color Scheme (Google Blue, NOT Purple) ────────────────
 private val LightColors = lightColorScheme(

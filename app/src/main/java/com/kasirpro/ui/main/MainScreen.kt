@@ -6,7 +6,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.navigation.compose.*
 import androidx.navigation.compose.rememberNavController
 import com.kasirpro.ui.dashboard.DashboardScreen

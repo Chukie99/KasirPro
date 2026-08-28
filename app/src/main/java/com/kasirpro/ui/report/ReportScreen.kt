@@ -143,7 +143,7 @@ fun BarChart(entries: List<BarEntry>, modifier: Modifier = Modifier) {
 @Composable
 fun PeriodSelector(period: ReportPeriod, onSelect: (ReportPeriod) -> Unit) {
     Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        ReportPeriod.values().forEach { p ->
+        ReportPeriod.entries.forEach { p ->
             FilterChip(
                 selected = period == p,
                 onClick = { onSelect(p) },
@@ -184,7 +184,7 @@ fun ListItemRow(label: String, value: String) {
         Text(label)
         Text(value, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
     }
-    Divider()
+    HorizontalDivider()
 }
 
 fun exportCSV(state: ReportUiState, context: android.content.Context) {

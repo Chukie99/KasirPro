@@ -152,10 +152,10 @@ class TransactionViewModel @Inject constructor(
 
         viewModelScope.launch {
             repo.addTransaction(tx)
-            _state.update { st -> st.copy(isComplete = true, errorMessage = null) }
-            // Reset cart for next transaction
-            _state.update {
-                it.copy(
+            _state.update { st ->
+                st.copy(
+                    isComplete = true,
+                    errorMessage = null,
                     cart = emptyList(),
                     subtotal = 0L,
                     discountInput = "",
