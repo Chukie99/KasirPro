@@ -2,7 +2,6 @@ package com.kasirpro.printer
 
 import android.bluetooth.BluetoothSocket
 import android.content.Context
-import android.content.SharedPreferences
 import android.widget.Toast
 import com.kasirpro.data.model.TransactionItem
 import com.kasirpro.utils.CurrencyFormatter
@@ -43,7 +42,8 @@ object ReceiptPrinter {
             return false
         }
 
-        val socket = BluetoothManager.connectPrinter(mac)
+        val bluetoothMgr = BluetoothManager(context)
+        val socket = bluetoothMgr.connectSocket(mac)
         if (socket == null) {
             Toast.makeText(context, "Gagal sambung ke printer.", Toast.LENGTH_SHORT).show()
             return false
@@ -62,13 +62,18 @@ object ReceiptPrinter {
             timestamp = timestamp,
         )
 
-        val success = BluetoothManager.sendData(socket, receipt.toByteArray(StandardCharsets.US_ASCII))
+        val success = try {
+            socket.outputStream?.write(receipt.toByteArray(StandardCharsets.US_ASCII))
+            true
+        } catch (_: Exception) {
+            false
+        }
         if (success) {
             Toast.makeText(context, "Struk dicetak.", Toast.LENGTH_SHORT).show()
             // Feed & cut (form feed + cut command for most Epson printers)
             try { socket.outputStream?.write(byteArrayOf(0x0A, 0x0A, 0x1D, 0x56, 0x41, 0x00)) } catch (_: Exception) {}
         }
-        BluetoothManager.disconnect(socket)
+        bluetoothMgr.disconnect(socket)
         return success
     }
 

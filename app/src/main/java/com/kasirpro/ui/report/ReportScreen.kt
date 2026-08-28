@@ -1,6 +1,9 @@
 package com.kasirpro.ui.report
 
 import android.os.Environment
+import android.widget.Toast
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -10,23 +13,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.app.ActivityCompat
-import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.components.Description
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.utils.ColorUtil
-import com.kasirpro.utils.CurrencyFormatter
-import kotlinx.coroutines.flow.collectAsStateWithLifecycle
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
+import com.kasirpro.utils.CurrencyFormatter
+import org.apache.commons.csv.CSVFormat
+import org.apache.commons.csv.CSVPrinter
 import java.io.File
+import java.io.FileWriter
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -42,10 +42,7 @@ fun ReportScreen(
     Scaffold(
         topBar = { SmallTopAppBar(title = { Text("Laporan") }) },
         floatingActionButton = {
-            FloatingActionButton(onClick = {
-                // Export CSV
-                exportCSV(state, context)
-            }) {
+            FloatingActionButton(onClick = { exportCSV(state, context) }) {
                 Icon(
                     imageVector = androidx.compose.material.icons.Icons.Default.FileDownload,
                     contentDescription = "Export CSV",
@@ -78,27 +75,13 @@ fun ReportScreen(
                     "Produk Terlaris", state.topProducts.firstOrNull()?.first ?: "-",
                 )
 
-                // Chart
+                // Native Compose bar chart
                 if (state.chartEntries.isNotEmpty()) {
                     Text("Penjualan", fontWeight = FontWeight.Bold, modifier = Modifier.padding(16.dp, 8.dp))
-                    AndroidView(
-                        factory = { ctx ->
-                            BarChart(ctx).apply {
-                                val entries = state.chartEntries.mapIndexed { idx, e ->
-                                    BarEntry(idx.toFloat(), e.value)
-                                }
-                                val dataSet = BarDataSet(entries, "Total (Rp1000)")
-                                dataSet.color = ColorUtil.rgb("#1A73E8", "#34A853", "#FBBC04")
-                                dataSet.valueTextSize = 10f
-                                data = BarData(dataSet)
-                                description = Description().apply { text = "Penjualan" }
-                                invalidate()
-                            }
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp)
-                            .padding(8.dp),
+                    BarChart(entries = state.chartEntries, modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .padding(8.dp)
                     )
                 }
 
@@ -116,6 +99,53 @@ fun ReportScreen(
                         ListItemRow("Meja $number", "$count order")
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun BarChart(entries: List<BarEntry>, modifier: Modifier = Modifier) {
+    val max = (entries.maxOfOrNull { it.value } ?: 1f).takeIf { it > 0 } ?: 1f
+    val barColor = Color(0xFF1A73E8)
+    val axisColor = Color(0xFFD1D5DB)
+    Column(modifier = modifier) {
+        Box(modifier = Modifier.weight(1f)) {
+            Canvas(modifier = Modifier.fillMaxSize()) {
+                val barWidth = size.width / entries.size * 0.6f
+                val spacing = size.width / entries.size
+                entries.forEachIndexed { idx, e ->
+                    val barHeight = (e.value / max) * size.height * 0.85f
+                    val x = spacing * idx + spacing * 0.2f
+                    val yTop = size.height - barHeight
+                    // bar
+                    drawRect(
+                        color = barColor,
+                        topLeft = Offset(x, yTop),
+                        size = androidx.compose.ui.geometry.Size(barWidth, barHeight)
+                    )
+                    // value label at top
+                    drawContext.canvas.nativeCanvas.apply {
+                        drawText(
+                            "${e.value.toInt()}",
+                            x + barWidth / 2,
+                            yTop - 8f,
+                            android.graphics.Paint().apply {
+                                textSize = 32f
+                                textAlign = android.graphics.Paint.Align.CENTER
+                                color = android.graphics.Color.BLACK
+                            }
+                        )
+                    }
+                }
+                // x-axis line
+                drawLine(axisColor, Offset(0f, size.height), Offset(size.width, size.height), strokeWidth = 2f)
+            }
+        }
+        // x labels
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+            entries.forEach { e ->
+                Text(e.label, fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
     }
@@ -160,7 +190,7 @@ fun SummaryDoubleCard(label1: String, val1: String, label2: String, val2: String
 }
 
 @Composable
-fun ListItemRow(label: String, value: String, Color: Color) {
+fun ListItemRow(label: String, value: String) {
     Row(Modifier.fillMaxWidth().padding(vertical = 6.dp, horizontal = 16.dp), horizontalArrangement = Arrangement.SpaceBetween) {
         Text(label)
         Text(value, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
@@ -174,17 +204,15 @@ fun exportCSV(state: ReportUiState, context: android.content.Context) {
         if (!downloads.exists()) downloads.mkdirs()
         val ts = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val file = File(downloads, "KasirPro_Report_$ts.csv")
-
-        val writer = com.github.doyaaaaaken.kotlincsv.dsl.csvWriter()
-        writer.open(file) {
-            writer {
-                singleRow(listOf("Metric", "Value"))
-                singleRow(listOf("Total Penjualan", state.dailySales.toString()))
-                singleRow(listOf("Jumlah Transaksi", state.transactionCount.toString()))
+        FileWriter(file).use {
+            CSVPrinter(it, CSVFormat.DEFAULT).use { printer ->
+                printer.printRecord("Metric", "Value")
+                printer.printRecord("Total Penjualan", state.dailySales.toString())
+                printer.printRecord("Jumlah Transaksi", state.transactionCount.toString())
             }
         }
-        android.widget.Toast.makeText(context, "Export berhasil! (${file.name})", android.widget.Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "Export berhasil! (${file.name})", Toast.LENGTH_LONG).show()
     } catch (e: Exception) {
-        android.widget.Toast.makeText(context, "Export gagal: ${e.message}", android.widget.Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "Export gagal: ${e.message}", Toast.LENGTH_LONG).show()
     }
 }

@@ -269,7 +269,7 @@ class BluetoothManager(private val context: Context) {
         if (state == BluetoothDevice.BOND_BONDED || state == BluetoothDevice.BOND_BONDING) {
             return true
         }
-        return device.createBond() == BluetoothDevice.BOND_BONDING
+        return device.createBond()
     }
 
     /** Whether a device is fully paired (bonded). */
@@ -314,13 +314,10 @@ class BluetoothManager(private val context: Context) {
         }
 
         return try {
-            // BluetoothSocket.connect() is blocking & not interruptible, so run
-            // it on a worker thread with a bounded timeout.
             val future = executor.submit { socket.connect() }
             future.get(timeoutMs.toLong(), TimeUnit.MILLISECONDS)
             socket
         } catch (e: TimeoutException) {
-            future.cancel(true)
             closeQuietly(socket)
             null
         } catch (e: Exception) {
