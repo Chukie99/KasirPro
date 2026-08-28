@@ -4,9 +4,8 @@
 
     <!-- Splash / activation theme (no action bar) -->
     <style name="Theme.KasirPro.Splash" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="windowSplashScreenBackground">@color/primary</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo</item>
-        <item name="postSplashScreenTheme">@style/Theme.KasirPro</item>
+        <item name="android:windowBackground">@color/primary</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 
     <!-- Main theme — Material 3 with custom color scheme -->
