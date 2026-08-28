@@ -96,6 +96,8 @@ class BluetoothManager(private val context: Context) {
         const val REQUEST_BLUETOOTH_PERMISSIONS = 0xC0FFEE
         const val REQUEST_ENABLE_BLUETOOTH = 0xBEEFCAFE
         private const val DISCOVERY_TIMEOUT_MS = 12_000L
+        private const val PREFS_NAME = "kasirpro_bluetooth"
+        private const val KEY_PRINTER_MAC = "printer_mac"
     }
 
     // ── Bluetooth adapter state ───────────────────────────────────────────
@@ -274,7 +276,7 @@ class BluetoothManager(private val context: Context) {
     fun isPaired(device: BluetoothDevice): Boolean =
         device.bondState == BluetoothDevice.BOND_BONDED
 
-    // ── Saved-printer MAC (lightweight, SharedPreferences-backed) ─────────
+    // ── Saved-printer MAC (SharedPreferences-backed) ────────────────────────
 
     /**
      * Persist the MAC address of the chosen printer so printReceipt() can find
@@ -289,11 +291,6 @@ class BluetoothManager(private val context: Context) {
     fun getSavedPrinterMac(): String? =
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
             .getString(KEY_PRINTER_MAC, null)
-
-    companion {
-        private const val PREFS_NAME = "kasirpro_bluetooth"
-        private const val KEY_PRINTER_MAC = "printer_mac"
-    }
 
     // ── Socket connection ─────────────────────────────────────────────────
 
