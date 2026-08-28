@@ -97,14 +97,12 @@ dependencies {
     // ── DataStore (preferences — replaces SharedPreferences API) ──
     implementation "androidx.datastore:datastore-preferences:1.1.1"
 
-    // ── Kotlin CSV (export reports) ────────────────────────────
-    implementation "com.github.doyaaaaaken:kotlin-csv-jvm:1.9.2"
+    // ── Kotlin CSV (export reports) — use Apache Commons CSV from Maven Central
+    implementation "org.apache.commons:commons-csv:1.10.0"
 
-    // ── esc-pos-printer (Bluetooth thermal printing) ───────────
-    implementation "com.github.iammert:esc-pos-printer:1.0.0"
+    // ── esc-pos-printer removed: ReceiptPrinter uses raw ESC/POS via BluetoothSocket
 
-    // ── MPAndroidChart (simple bar charts) ──────────────────────
-    implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
+    // ── Bar charts replaced: ReportScreen uses Compose Canvas native bar chart
 
     // ── Accompanist (permissions helper) ──────────────────────
     implementation "com.google.accompanist:accompanist-permissions:0.34.0"
