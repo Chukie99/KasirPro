@@ -1,31 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="192dp"
-    android:height="192dp"
-    android:viewportWidth="192"
-    android:viewportHeight="192">
-    <path
-        android:fillColor="#E8F0FE"
-        android:pathData="M96,8 C51,8 8,47 8,92 C8,137 51,176 96,176 C141,176 184,137 184,92 C184,47 141,8 96,8 Z" />
-    <path
-        android:fillColor="#1A73E8"
-        android:pathData="M64,64 L128,64 L128,100 L64,100 Z M72,72 L72,92 L120,92 L120,72 Z" />
-    <rect
-        android:fillColor="#1A73E8"
-        android:width="42"
-        android:height="12"
-        android:x="82"
-        android:y="78" />
-    <rect
-        android:fillColor="#1A73E8"
-        android:width="42"
-        android:height="12"
-        android:x="82"
-        android:y="100" />
-    <rect
-        android:fillColor="#34A853"
-        android:width="58"
-        android:height="10"
-        android:x="71"
-        android:y="140" />
-</vector>
+<!-- 58mm thermal launcher icon -->
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@drawable/ic_launcher_background" />
+    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+</adaptive-icon>
