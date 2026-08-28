@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.LocalTextColor
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -111,10 +110,21 @@ fun TransactionScreen(
                 onClick = {
                     viewModel.completeTransaction()
                     // Try print receipt
+                    val cartItems = state.cart.map {
+                        com.kasirpro.data.model.TransactionItem(
+                            productId = it.productId,
+                            productName = it.product.name,
+                            quantity = it.quantity,
+                            price = it.product.price,
+                            subtotal = it.subtotal,
+                        )
+                    }
                     ReceiptPrinter.printReceipt(
                         context = context,
-                        storeName = "KasirPro Store",  // fetch from prefs later
-                        items = state.cart,
+                        storeName = "KasirPro Store",
+                        storeAddress = "",
+                        storePhone = "",
+                        items = cartItems,
                         subtotal = state.subtotal,
                         tax = state.taxAmount,
                         discount = state.discountAmount,
@@ -179,13 +189,13 @@ fun CartItemRow(item: CartItem, onQtyChange: (Int) -> Unit, onDelete: () -> Unit
 @Composable
 fun RadioButtonRow(label: String, selected: Boolean, onSelect: () -> Unit) {
     Row(Modifier.clickable(onSelect).padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-            RadioButton(selected = selected, onClick = onSelect, colors = RadioButtonDefaults.defaultRadioButtonColors(selected = MaterialTheme.colorScheme.primary))
+        RadioButton(selected = selected, onClick = onSelect, colors = RadioButtonDefaults.radioButtonColors(selectedColor = MaterialTheme.colorScheme.primary))
         Text(label)
     }
 }
 
 @Composable
-fun SummaryRow(label: String, value: String, isBold: Boolean = false, Color: Color = LocalTextColor.current) {
+fun SummaryRow(label: String, value: String, isBold: Boolean = false, Color: Color = MaterialTheme.colorScheme.onSurface) {
     Row(Modifier.fillMaxWidth().padding(vertical = 2.dp), horizontalArrangement = Arrangement.SpaceBetween) {
         Text(label, fontWeight = if (isBold) FontWeight.Bold else FontWeight.Normal, color = Color)
         Text(value, fontWeight = if (isBold) FontWeight.Bold else FontWeight.Normal, color = Color)

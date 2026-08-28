@@ -10,6 +10,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -45,7 +46,3 @@ object DatabaseModule {
         return context.getSharedPreferences("kasirpro_prefs", Context.MODE_PRIVATE)
     }
 }
-
-// Hilt needs this annotation to resolve Context
-@dagger.hilt.android.qualifiers.ApplicationContext
-annotation class ApplicationContext

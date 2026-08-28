@@ -94,7 +94,7 @@ class BluetoothManager(private val context: Context) {
 
     companion object {
         const val REQUEST_BLUETOOTH_PERMISSIONS = 0xC0FFEE
-        const val REQUEST_ENABLE_BLUETOOTH = 0xBEEFCAFE
+        const val REQUEST_ENABLE_BLUETOOTH = 0xBEFA  // Int requestCode for startActivityForResult
         private const val DISCOVERY_TIMEOUT_MS = 12_000L
         private const val PREFS_NAME = "kasirpro_bluetooth"
         private const val KEY_PRINTER_MAC = "printer_mac"
