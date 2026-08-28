@@ -90,9 +90,24 @@ fun AddProductScreen(
 
             // Category dropdown
             var expanded by remember { mutableStateOf(false) }
-            Box(Modifier.fillMaxWidth()) {
-                OutlinedTextField(value = category, onValueChange = {}, readOnly = true, label = { Text("Kategori") }, modifier = Modifier.fillMaxWidth(), trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null) }, onClick = { expanded = true })
-                DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            ExposedDropdownMenuBox(
+                expanded = expanded,
+                onExpandedChange = { expanded = !expanded },
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                OutlinedTextField(
+                    value = category,
+                    onValueChange = {},
+                    readOnly = true,
+                    label = { Text("Kategori") },
+                    modifier = Modifier.fillMaxWidth(),
+                    trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null) },
+                    isError = false,
+                )
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false },
+                ) {
                     listOf("Makanan", "Minuman", "Snack").forEach { c ->
                         DropdownMenuItem(onClick = { category = c; expanded = false }) { Text(c) }
                     }
