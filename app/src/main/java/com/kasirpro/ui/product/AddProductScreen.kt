@@ -30,6 +30,7 @@ import com.kasirpro.utils.ImageHelper
 @Composable
 fun AddProductScreen(
     modifier: Modifier = Modifier,
+    editProductId: Long? = null,
     onProductSaved: () -> Unit,
     viewModel: ProductViewModel = hiltViewModel(),
 ) {
@@ -39,6 +40,21 @@ fun AddProductScreen(
     var stock by remember { mutableStateOf("") }
     var category by remember { mutableStateOf("Makanan") }
     var imagePath by remember { mutableStateOf<String?>(null) }
+    val isEditing = editProductId != null
+
+    // Load existing product if editing
+    LaunchedEffect(editProductId) {
+        if (editProductId != null) {
+            val product = viewModel.getProduct(editProductId)
+            if (product != null) {
+                name = product.name
+                price = product.price.toString()
+                stock = product.stock.toString()
+                category = product.category
+                imagePath = product.imageUri
+            }
+        }
+    }
 
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let {
@@ -54,13 +70,17 @@ fun AddProductScreen(
     }
 
     Scaffold(
-        topBar = { SmallTopAppBar(title = { Text("Tambah Produk") }) },
+        topBar = { SmallTopAppBar(title = { Text(if (isEditing) "Edit Produk" else "Tambah Produk") }) },
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 val p = price.toLongOrNull() ?: 0L
                 val s = stock.toIntOrNull() ?: 0
                 if (name.isNotBlank()) {
-                    viewModel.addProduct(name, p, s, category, imagePath)
+                    if (isEditing && editProductId != null) {
+                        viewModel.updateProductById(editProductId, name, p, s, category, imagePath)
+                    } else {
+                        viewModel.addProduct(name, p, s, category, imagePath)
+                    }
                     onProductSaved()
                 }
             }) {

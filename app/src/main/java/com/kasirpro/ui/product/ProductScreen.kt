@@ -27,6 +27,7 @@ import com.kasirpro.utils.CurrencyFormatter
 fun ProductScreen(
     modifier: Modifier = Modifier,
     onEditProduct: (Product) -> Unit,
+    onAddProduct: () -> Unit = {},
     viewModel: ProductViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -34,7 +35,7 @@ fun ProductScreen(
     Scaffold(
         topBar = { SmallTopAppBar(title = { Text("Produk") }) },
         floatingActionButton = {
-            FloatingActionButton(onClick = { /* navigate to add */ }) {
+            FloatingActionButton(onClick = onAddProduct) {
                 Icon(painterResource(R.drawable.ic_launcher), contentDescription = "Add", tint = MaterialTheme.colorScheme.onPrimary)
             }
         },

@@ -25,12 +25,22 @@ class TransactionViewModel @Inject constructor(
     init {
         loadTables()
         loadTaxRate()
+        loadStoreInfo()
     }
 
     private fun loadTaxRate() {
         viewModelScope.launch {
             val tax = repo.getInt(Setting.KEY_TAX_RATE, 11)
             _state.update { it.copy(taxPercent = tax.toDouble()) }
+        }
+    }
+
+    private fun loadStoreInfo() {
+        viewModelScope.launch {
+            val name = repo.getString(Setting.KEY_STORE_NAME, "KasirPro Store") ?: "KasirPro Store"
+            val address = repo.getString(Setting.KEY_STORE_ADDRESS, "") ?: ""
+            val phone = repo.getString(Setting.KEY_STORE_PHONE, "") ?: ""
+            _state.update { it.copy(storeName = name, storeAddress = address, storePhone = phone) }
         }
     }
 

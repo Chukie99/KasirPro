@@ -64,6 +64,28 @@ fun SettingsScreen(
                 OutlinedTextField(value = state.defaultDiscount, onValueChange = { viewModel.onDefaultDiscount(it) }, label = { Text("Diskon Default (%)") }, modifier = Modifier.fillMaxWidth())
             }
 
+            // ── Tema ──
+            SettingsSection("Tema") {
+                Text("Mode Tampilan", style = MaterialTheme.typography.bodyMedium)
+                Row(Modifier.padding(top = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    FilterChip(
+                        selected = state.themeMode == "light",
+                        onClick = { viewModel.onThemeMode("light") },
+                        label = { Text("Terang") },
+                    )
+                    FilterChip(
+                        selected = state.themeMode == "dark",
+                        onClick = { viewModel.onThemeMode("dark") },
+                        label = { Text("Gelap") },
+                    )
+                    FilterChip(
+                        selected = state.themeMode == "system",
+                        onClick = { viewModel.onThemeMode("system") },
+                        label = { Text("Sistem") },
+                    )
+                }
+            }
+
             // ── Printer ──
             SettingsSection("Printer Bluetooth") {
                 if (state.isConnectedPrinter) {

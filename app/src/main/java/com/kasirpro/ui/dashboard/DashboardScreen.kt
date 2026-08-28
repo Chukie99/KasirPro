@@ -32,8 +32,9 @@ import com.kasirpro.data.model.Product
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
-    onNavigateToProduct: (Product) -> Unit,
+    onNavigateToProduct: () -> Unit,
     onNavigateToTable: () -> Unit,
+    onAddToCart: (Long) -> Unit = {},
     modifier: Modifier = Modifier,
     viewModel: DashboardViewModel = hiltViewModel(),
 ) {
@@ -57,12 +58,12 @@ fun DashboardScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /* open product management - admin only */ },
+                onClick = onNavigateToProduct,
                 containerColor = MaterialTheme.colorScheme.primary,
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = "Add",
+                    contentDescription = "Kelola Produk",
                     tint = MaterialTheme.colorScheme.onPrimary,
                 )
             }
@@ -130,7 +131,11 @@ fun DashboardScreen(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     items(state.products, key = { it.id }) { product ->
-                        ProductCard(product = product, onClick = { onNavigateToProduct(product) })
+                        ProductCard(
+                            product = product,
+                            onClick = { onAddToCart(product.id) },
+                            onLongClick = { onNavigateToProduct() },
+                        )
                     }
                 }
             }
@@ -139,7 +144,7 @@ fun DashboardScreen(
 }
 
 @Composable
-fun ProductCard(product: Product, onClick: () -> Unit) {
+fun ProductCard(product: Product, onClick: () -> Unit, onLongClick: () -> Unit = {}) {
     Card(
         modifier = Modifier
             .fillMaxWidth()

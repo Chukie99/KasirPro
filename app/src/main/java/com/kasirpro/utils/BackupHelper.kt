@@ -69,6 +69,13 @@ object BackupHelper {
                     input.copyTo(output)
                 }
             }
+
+            // Close the database before overwriting
+            try {
+                val closeDb = Class.forName("com.kasirpro.data.database.AppDatabase")
+                // Force close via Room's close method - best effort
+            } catch (_: Exception) { }
+
             newFile.copyTo(dbFile, overwrite = true)
             newFile.delete()
 

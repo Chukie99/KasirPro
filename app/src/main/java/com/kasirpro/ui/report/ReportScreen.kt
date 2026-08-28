@@ -195,9 +195,29 @@ fun exportCSV(state: ReportUiState, context: android.content.Context) {
         val file = File(downloads, "KasirPro_Report_$ts.csv")
         FileWriter(file).use {
             CSVPrinter(it, CSVFormat.DEFAULT).use { printer ->
-                printer.printRecord("Metric", "Value")
+                // Summary
+                printer.printRecord("METRIK", "NILAI")
                 printer.printRecord("Total Penjualan", state.dailySales.toString())
                 printer.printRecord("Jumlah Transaksi", state.transactionCount.toString())
+                printer.printRecord("Periode", state.period.name)
+                printer.printRecord("")
+
+                // Top products
+                if (state.topProducts.isNotEmpty()) {
+                    printer.printRecord("PRODUK TERLARIS", "JUMLAH TERJUAL")
+                    state.topProducts.forEach { (name, qty) ->
+                        printer.printRecord(name, qty.toString())
+                    }
+                    printer.printRecord("")
+                }
+
+                // Top tables
+                if (state.topTables.isNotEmpty()) {
+                    printer.printRecord("MEJA TERLARIS", "JUMLAH ORDER")
+                    state.topTables.forEach { (number, count) ->
+                        printer.printRecord("Meja $number", count.toString())
+                    }
+                }
             }
         }
         Toast.makeText(context, "Export berhasil! (${file.name})", Toast.LENGTH_LONG).show()

@@ -28,7 +28,12 @@ class MainActivity : ComponentActivity() {
         DeviceIdHelper.getDeviceId(this)
 
         setContent {
-            Theme {
+            val themeMode by remember {
+                mutableStateOf(
+                    devicePrefs.getString("kasirpro_theme_mode", "system") ?: "system"
+                )
+            }
+            Theme(themeMode = themeMode) {
                 var showSplash by remember { mutableStateOf(true) }
                 var isActivated by remember {
                     mutableStateOf(devicePrefs.getBoolean("kasirpro_activated", false))

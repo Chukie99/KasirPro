@@ -65,13 +65,7 @@ class Repository(private val db: AppDatabase) {
         if (getString(Setting.KEY_TAX_RATE) == null) putInt(Setting.KEY_TAX_RATE, 11)
         if (getString(Setting.KEY_DEFAULT_DISCOUNT) == null) putInt(Setting.KEY_DEFAULT_DISCOUNT, 0)
         if (getString(Setting.KEY_STORE_NAME) == null) putString(Setting.KEY_STORE_NAME, "KasirPro Store")
-        if (getString(Setting.KEY_THEME) == null) putString(Setting.KEY_THEME, "dark")
+        if (getString(Setting.KEY_THEME) == null) putString(Setting.KEY_THEME, "system")
         if (getString(Setting.KEY_DEFAULT_PAYMENT) == null) putString(Setting.KEY_DEFAULT_PAYMENT, "Cash")
-    }
-
-    companion object {
-        @Volatile private var INSTANCE: Repository? = null
-        fun getInstance(db: AppDatabase): Repository =
-            INSTANCE ?: synchronized(this) { INSTANCE ?: Repository(db).also { INSTANCE = it } }
     }
 }

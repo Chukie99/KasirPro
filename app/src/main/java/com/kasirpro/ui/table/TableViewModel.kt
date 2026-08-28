@@ -33,6 +33,18 @@ class TableViewModel @Inject constructor(private val repo: Repository) : ViewMod
         }
     }
 
+    suspend fun getTable(id: Long): Table? = repo.getTable(id)
+
+    fun updateTableById(id: Long, number: String, capacity: Int) {
+        viewModelScope.launch {
+            val existing = repo.getTable(id)
+            if (existing != null) {
+                repo.updateTable(existing.copy(number = number, capacity = capacity))
+                load()
+            }
+        }
+    }
+
     fun updateTable(t: Table) {
         viewModelScope.launch { repo.updateTable(t); load() }
     }

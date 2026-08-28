@@ -18,13 +18,13 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
-        return AppDatabase.getInstance(context)
+        return AppDatabase.buildDatabase(context)
     }
 
     @Provides
     @Singleton
     fun provideRepository(db: AppDatabase): Repository {
-        return Repository.getInstance(db)
+        return Repository(db)
     }
 
     @Provides

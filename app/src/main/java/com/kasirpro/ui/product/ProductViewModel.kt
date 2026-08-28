@@ -85,6 +85,25 @@ class ProductViewModel @Inject constructor(
         }
     }
 
+    suspend fun getProduct(id: Long): Product? = repo.getProduct(id)
+
+    fun updateProductById(id: Long, name: String, price: Long, stock: Int, category: String, imageUri: String?) {
+        viewModelScope.launch {
+            val existing = repo.getProduct(id)
+            if (existing != null) {
+                repo.updateProduct(existing.copy(
+                    name = name,
+                    price = price,
+                    stock = stock,
+                    category = category,
+                    imageUri = imageUri,
+                    updatedAt = System.currentTimeMillis(),
+                ))
+                loadProducts()
+            }
+        }
+    }
+
     fun updateProduct(p: Product) {
         viewModelScope.launch {
             repo.updateProduct(p.copy(updatedAt = System.currentTimeMillis()))

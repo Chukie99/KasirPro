@@ -121,9 +121,9 @@ fun TransactionScreen(
                     }
                     ReceiptPrinter.printReceipt(
                         context = context,
-                        storeName = "KasirPro Store",
-                        storeAddress = "",
-                        storePhone = "",
+                        storeName = state.storeName,
+                        storeAddress = state.storeAddress,
+                        storePhone = state.storePhone,
                         items = cartItems,
                         subtotal = state.subtotal,
                         tax = state.taxAmount,

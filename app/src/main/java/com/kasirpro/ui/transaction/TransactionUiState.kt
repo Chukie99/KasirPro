@@ -24,4 +24,7 @@ data class TransactionUiState(
     val isLoading: Boolean = false,
     val isComplete: Boolean = false,
     val errorMessage: String? = null,
+    val storeName: String = "KasirPro Store",
+    val storeAddress: String = "",
+    val storePhone: String = "",
 )

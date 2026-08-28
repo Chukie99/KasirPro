@@ -39,7 +39,7 @@ private val DarkColors = darkColorScheme(
     secondaryContainer = Color(0xFF1B5E20),
     tertiary = Color(0xFFFFD54F),
     onTertiary = Color(0xFF4D3500),
-    background = Color(0xFF0F172A),   // dark bg — note: spec says #F5F7FA is light; dark variant uses slate
+    background = Color(0xFF0F172A),
     onBackground = Color(0xFFE2E8F0),
     surface = Color(0xFF1E293B),
     onSurface = Color(0xFFF8FAFC),
@@ -51,9 +51,15 @@ private val DarkColors = darkColorScheme(
 
 @Composable
 fun Theme(
+    themeMode: String = "system",
     content: @Composable () -> Unit,
 ) {
-    val colors = if (isSystemInDarkTheme()) DarkColors else LightColors
+    val isDark = when (themeMode) {
+        "dark" -> true
+        "light" -> false
+        else -> isSystemInDarkTheme()
+    }
+    val colors = if (isDark) DarkColors else LightColors
     MaterialTheme(
         colorScheme = colors,
         typography = Typography(),

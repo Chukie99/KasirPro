@@ -21,6 +21,7 @@ data class SettingsUiState(
     val printerName: String = "",
     val isLoading: Boolean = false,
     val version: String = "v1.0.0",
+    val themeMode: String = "system",
 )
 
 @HiltViewModel
@@ -40,6 +41,7 @@ class SettingsViewModel @Inject constructor(
             repo.getString(Setting.KEY_STORE_NAME)?.let { name -> _state.value = _state.value.copy(storeName = name) }
             repo.getString(Setting.KEY_STORE_ADDRESS)?.let { addr -> _state.value = _state.value.copy(storeAddress = addr) }
             repo.getString(Setting.KEY_STORE_PHONE)?.let { phone -> _state.value = _state.value.copy(storePhone = phone) }
+            repo.getString(Setting.KEY_THEME)?.let { theme -> _state.value = _state.value.copy(themeMode = theme) }
             _state.value = _state.value.copy(
                 taxRate = repo.getInt(Setting.KEY_TAX_RATE, 11).toString(),
                 defaultDiscount = repo.getInt(Setting.KEY_DEFAULT_DISCOUNT, 0).toString(),
@@ -53,6 +55,7 @@ class SettingsViewModel @Inject constructor(
     fun onStorePhone(phone: String) { _state.value = _state.value.copy(storePhone = phone) }
     fun onTaxRate(rate: String) { _state.value = _state.value.copy(taxRate = rate) }
     fun onDefaultDiscount(disc: String) { _state.value = _state.value.copy(defaultDiscount = disc) }
+    fun onThemeMode(mode: String) { _state.value = _state.value.copy(themeMode = mode) }
 
     fun saveSettings() {
         val s = _state.value
@@ -60,6 +63,9 @@ class SettingsViewModel @Inject constructor(
             repo.putString(Setting.KEY_STORE_NAME, s.storeName)
             repo.putString(Setting.KEY_STORE_ADDRESS, s.storeAddress)
             repo.putString(Setting.KEY_STORE_PHONE, s.storePhone)
+            repo.putString(Setting.KEY_THEME, s.themeMode)
+            // Also save to SharedPreferences for MainActivity to read
+            prefs.edit().putString("kasirpro_theme_mode", s.themeMode).apply()
             s.taxRate.toIntOrNull()?.let { repo.putInt(Setting.KEY_TAX_RATE, it) }
             s.defaultDiscount.toIntOrNull()?.let { repo.putInt(Setting.KEY_DEFAULT_DISCOUNT, it) }
         }

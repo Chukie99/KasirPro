@@ -123,7 +123,7 @@ interface TransactionDao {
     suspend fun dailySummary(start: Long, end: Long): List<DailySummary>
 
     data class DailySummary(
-        val day: Long,
+        val day: String,
         val total_sales: Long,
         val tx_count: Int,
     )
@@ -185,21 +185,13 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun settingDao(): SettingDao
 
     companion object {
-        @Volatile private var INSTANCE: AppDatabase? = null
-
-        fun getInstance(context: android.content.Context): AppDatabase {
-            return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: buildDatabase(context.applicationContext).also { INSTANCE = it }
-            }
-        }
-
-        private fun buildDatabase(context: android.content.Context): AppDatabase {
+        fun buildDatabase(context: android.content.Context): AppDatabase {
             return Room.databaseBuilder(
-                context,
+                context.applicationContext,
                 AppDatabase::class.java,
                 "kasirpro.db"
             )
-                .fallbackToDestructiveMigration() // simple for v1; add Migrations for prod
+                .fallbackToDestructiveMigration()
                 .build()
         }
     }
