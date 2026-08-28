@@ -24,3 +24,4 @@
     <dimen name="elevation_low">1dp</dimen>
     <dimen name="elevation_medium">2dp</dimen>
     <dimen name="elevation_high">4dp</dimen>
+</resources>
