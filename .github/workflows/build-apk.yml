@@ -69,7 +69,9 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: ${{ steps.apk.outputs.apk }}
+          files: |
+            ${{ steps.apk.outputs.apk }}
+            admin/serial-generator.html
           name: Release ${{ github.ref_name }}
           tag_name: ${{ github.ref_name }}
         env:
