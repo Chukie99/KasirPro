@@ -35,7 +35,7 @@ fun TableScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     Scaffold(
-        topBar = { SmallTopAppBar(title = { Text("Meja") }) },
+        topBar = { TopAppBar(title = { Text("Meja") }) },
         floatingActionButton = { FloatingActionButton(onClick = onAddTable) { Icon(androidx.compose.material.icons.Icons.Default.Add, contentDescription = "Add table", tint = MaterialTheme.colorScheme.onPrimary) } },
     ) { padding ->
         if (state.tables.isEmpty()) {

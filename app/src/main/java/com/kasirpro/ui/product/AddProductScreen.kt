@@ -1,5 +1,4 @@
 package com.kasirpro.ui.product
-
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -16,7 +15,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -40,9 +38,9 @@ fun AddProductScreen(
     var stock by remember { mutableStateOf("") }
     var category by remember { mutableStateOf("Makanan") }
     var imagePath by remember { mutableStateOf<String?>(null) }
+    var showNameError by remember { mutableStateOf(false) }
     val isEditing = editProductId != null
 
-    // Load existing product if editing
     LaunchedEffect(editProductId) {
         if (editProductId != null) {
             val product = viewModel.getProduct(editProductId)
@@ -55,45 +53,45 @@ fun AddProductScreen(
             }
         }
     }
-
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let {
-            // Convert uri to bitmap & save
             try {
-                val input = context.contentResolver.openInputStream(uri)
-                val bitmap = android.graphics.BitmapFactory.decodeStream(input)
-                input?.close()
-                val path = ImageHelper.saveImageToInternal(context, bitmap)
-                imagePath = path
+                context.contentResolver.openInputStream(uri)?.use { input ->
+                    val bitmap = android.graphics.BitmapFactory.decodeStream(input)
+                    if (bitmap != null) {
+                        val path = ImageHelper.saveImageToInternal(context, bitmap)
+                        imagePath = path
+                    }
+                }
             } catch (e: Exception) { e.printStackTrace() }
         }
     }
 
     Scaffold(
-        topBar = { SmallTopAppBar(title = { Text(if (isEditing) "Edit Produk" else "Tambah Produk") }) },
+        topBar = { TopAppBar(title = { Text(if (isEditing) "Edit Produk" else "Tambah Produk") }) },
         floatingActionButton = {
             FloatingActionButton(onClick = {
+                if (name.isBlank()) { showNameError = true; return@FloatingActionButton }
                 val p = price.toLongOrNull() ?: 0L
                 val s = stock.toIntOrNull() ?: 0
-                if (name.isNotBlank()) {
-                    if (isEditing && editProductId != null) {
-                        viewModel.updateProductById(editProductId, name, p, s, category, imagePath)
-                    } else {
-                        viewModel.addProduct(name, p, s, category, imagePath)
-                    }
-                    onProductSaved()
+                // clamp negatives
+                val safeP = if (p < 0) 0L else p
+                val safeS = if (s < 0) 0 else s
+                if (isEditing && editProductId != null) {
+                    viewModel.updateProductById(editProductId, name.trim(), safeP, safeS, category, imagePath)
+                } else {
+                    viewModel.addProduct(name.trim(), safeP, safeS, category, imagePath)
                 }
+                onProductSaved()
             }) {
                 Icon(
                     imageVector = Icons.Default.Save,
                     contentDescription = "Simpan",
-                    tint = MaterialTheme.colorScheme.onPrimary,
                 )
             }
         },
     ) { padding ->
         Column(modifier = modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(16.dp)) {
-            // Image picker
             Box(
                 modifier = Modifier
                     .size(96.dp)
@@ -111,11 +109,31 @@ fun AddProductScreen(
             Text("Ketuk untuk pilih gambar", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 4.dp))
 
             Spacer(Modifier.height(16.dp))
-            OutlinedTextField(value = name, onValueChange = { name = it }, label = { Text("Nama Produk") }, modifier = Modifier.fillMaxWidth())
-            OutlinedTextField(value = price, onValueChange = { price = it }, label = { Text("Harga (Rp)") }, modifier = Modifier.fillMaxWidth(), placeholder = { Text("3000") })
-            OutlinedTextField(value = stock, onValueChange = { stock = it }, label = { Text("Stok") }, modifier = Modifier.fillMaxWidth())
+            OutlinedTextField(
+                value = name,
+                onValueChange = { name = it; if (it.isNotBlank()) showNameError = false },
+                label = { Text("Nama Produk *") },
+                modifier = Modifier.fillMaxWidth(),
+                isError = showNameError,
+                supportingText = { if (showNameError) Text("Nama tidak boleh kosong") },
+                singleLine = true
+            )
+            OutlinedTextField(
+                value = price,
+                onValueChange = { if (it.all { c -> c.isDigit() }) price = it },
+                label = { Text("Harga (Rp)") },
+                modifier = Modifier.fillMaxWidth(),
+                placeholder = { Text("3000") },
+                singleLine = true
+            )
+            OutlinedTextField(
+                value = stock,
+                onValueChange = { if (it.all { c -> c.isDigit() }) stock = it },
+                label = { Text("Stok") },
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true
+            )
 
-            // Category dropdown
             var expanded by remember { mutableStateOf(false) }
             ExposedDropdownMenuBox(
                 expanded = expanded,
@@ -127,9 +145,8 @@ fun AddProductScreen(
                     onValueChange = {},
                     readOnly = true,
                     label = { Text("Kategori") },
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().menuAnchor(MenuAnchorType.PrimaryNotEditable),
                     trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null) },
-                    isError = false,
                 )
                 ExposedDropdownMenu(
                     expanded = expanded,

@@ -33,7 +33,7 @@ fun AddTableScreen(
         }
     }
 
-    Scaffold(topBar = { SmallTopAppBar(title = { Text(if (isEditing) "Edit Meja" else "Tambah Meja") }) }) { padding ->
+    Scaffold(topBar = { TopAppBar(title = { Text(if (isEditing) "Edit Meja" else "Tambah Meja") }) }) { padding ->
         Column(modifier = modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(16.dp)) {
             OutlinedTextField(value = number, onValueChange = { if (it.length <= 4) number = it }, label = { Text("Nomor Meja") }, placeholder = { Text("Misal: 1, A3") })
             OutlinedTextField(value = capacity, onValueChange = { if (it.length <= 2) capacity = it }, label = { Text("Kapasitas (1-10)") }, placeholder = { Text("4") })

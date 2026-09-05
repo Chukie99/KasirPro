@@ -43,7 +43,7 @@ fun SettingsScreen(
     }
 
     Scaffold(
-        topBar = { SmallTopAppBar(title = { Text("Pengaturan") }) },
+        topBar = { TopAppBar(title = { Text("Pengaturan") }) },
     ) { padding ->
         Column(
             modifier = modifier

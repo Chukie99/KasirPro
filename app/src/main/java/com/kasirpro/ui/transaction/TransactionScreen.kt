@@ -42,7 +42,7 @@ fun TransactionScreen(
 
     Scaffold(
         topBar = {
-            SmallTopAppBar(title = { Text("Transaksi Kasir") })
+            TopAppBar(title = { Text("Transaksi Kasir") })
         },
     ) { padding ->
         Column(

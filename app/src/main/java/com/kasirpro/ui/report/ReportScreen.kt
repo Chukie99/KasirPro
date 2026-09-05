@@ -42,7 +42,7 @@ fun ReportScreen(
     val context = LocalContext.current
 
     Scaffold(
-        topBar = { SmallTopAppBar(title = { Text("Laporan") }) },
+        topBar = { TopAppBar(title = { Text("Laporan") }) },
         floatingActionButton = {
             FloatingActionButton(onClick = { exportCSV(state, context) }) {
                 Icon(
