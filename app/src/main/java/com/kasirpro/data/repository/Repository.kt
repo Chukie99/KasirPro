@@ -27,7 +27,7 @@ class Repository(private val db: AppDatabase) {
         if (query.isBlank()) getAllProducts() else db.productDao().searchProducts(query)
     suspend fun getProductsByCategory(cat: String): List<Product> = db.productDao().getProductsByCategory(cat)
     suspend fun getAllCategories(): List<String> =
-        listOf("Semua", "Makanan", "Minuman", "Snack") + db.productDao().getAllCategories()
+        (listOf("Semua", "Makanan", "Minuman", "Snack") + db.productDao().getAllCategories()).distinct()
     suspend fun addProduct(p: Product): Long = db.productDao().insert(p)
     suspend fun updateProduct(p: Product) = db.productDao().update(p)
     suspend fun deleteProduct(p: Product) = db.productDao().delete(p)

@@ -49,10 +49,15 @@ class ReportViewModel @Inject constructor(
                 val calendar = Calendar.getInstance()
                 val end = calendar.timeInMillis
                 calendar.add(when (period) {
-                    ReportPeriod.DAILY -> Calendar.DAY_OF_MONTH
+                    ReportPeriod.DAILY -> Calendar.DAY_OF_YEAR
                     ReportPeriod.WEEKLY -> Calendar.WEEK_OF_YEAR
                     ReportPeriod.MONTHLY -> Calendar.MONTH
                 }, -1)
+                // For DAILY, snap to start-of-day WIB to avoid UTC 86400000 grouping drift
+                if (period == ReportPeriod.DAILY) {
+                    val c2 = Calendar.getInstance().apply { set(Calendar.HOUR_OF_DAY, 0); set(Calendar.MINUTE, 0); set(Calendar.SECOND, 0); set(Calendar.MILLISECOND, 0) }
+                    calendar.timeInMillis = c2.timeInMillis
+                }
                 val start = calendar.timeInMillis
 
                 val txs = repo.getTransactionsBetween(start, end)
@@ -85,7 +90,8 @@ class ReportViewModel @Inject constructor(
                 // Chart: daily bars (group by day)
                 val dayMap = mutableMapOf<Long, Long>()
                 txs.forEach { tx ->
-                    val day = tx.createdAt / (24L * 3600 * 1000) * (24L * 3600 * 1000)
+                    val cal = Calendar.getInstance().apply { timeInMillis = tx.createdAt; set(Calendar.HOUR_OF_DAY, 0); set(Calendar.MINUTE, 0); set(Calendar.SECOND, 0); set(Calendar.MILLISECOND, 0) }
+                    val day = cal.timeInMillis
                     dayMap[day] = dayMap.getOrDefault(day, 0L) + tx.total
                 }
                 val chartEntries = dayMap.entries.sortedBy { it.key }.take(7)

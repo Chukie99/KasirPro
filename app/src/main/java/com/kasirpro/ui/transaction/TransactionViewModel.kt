@@ -130,7 +130,7 @@ class TransactionViewModel @Inject constructor(
 
     fun completeTransaction() {
         val s = _state.value
-        if (s.cart.isEmpty() || s.selectedTableNumber.isBlank()) return
+        if (s.cart.isEmpty()) return
 
         val itemsJson = com.google.gson.GsonBuilder().create()
             .toJson(s.cart.map {

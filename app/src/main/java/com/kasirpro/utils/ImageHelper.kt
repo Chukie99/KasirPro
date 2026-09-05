@@ -24,9 +24,15 @@ object ImageHelper {
         if (!dir.exists()) dir.mkdirs()
         val name = "img_" + System.currentTimeMillis() + ".jpg"
         val file = File(dir, name)
+        // Downscale if larger than MAX_SIZE_PX to avoid OOM / 8MB file
+        val scaled = if (bitmap.width > MAX_SIZE_PX || bitmap.height > MAX_SIZE_PX) {
+            val ratio = minOf(MAX_SIZE_PX.toFloat() / bitmap.width, MAX_SIZE_PX.toFloat() / bitmap.height)
+            Bitmap.createScaledBitmap(bitmap, (bitmap.width * ratio).toInt(), (bitmap.height * ratio).toInt(), true)
+        } else bitmap
         FileOutputStream(file).use { out ->
-            bitmap.compress(Bitmap.CompressFormat.JPEG, QUALITY, out)
+            scaled.compress(Bitmap.CompressFormat.JPEG, QUALITY, out)
         }
+        if (scaled !== bitmap) try { bitmap.recycle() } catch (_: Exception) {}
         return file.absolutePath
     }
 

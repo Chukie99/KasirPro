@@ -110,7 +110,7 @@ fun SettingsScreen(
                 }
                 Spacer(Modifier.height(8.dp))
                 OutlinedButton(onClick = {
-                    restoreLauncher.launch(arrayOf("application/octet-stream"))
+                    restoreLauncher.launch(arrayOf("*/*"))
                 }, modifier = Modifier.fillMaxWidth()) {
                     Text("📤 Restore Database")
                 }

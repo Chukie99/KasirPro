@@ -189,12 +189,11 @@ fun ListItemRow(label: String, value: String) {
 
 fun exportCSV(state: ReportUiState, context: android.content.Context) {
     try {
-        val downloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        if (!downloads.exists()) downloads.mkdirs()
         val ts = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        val file = File(downloads, "KasirPro_Report_$ts.csv")
-        FileWriter(file).use {
-            CSVPrinter(it, CSVFormat.DEFAULT).use { printer ->
+        val fileName = "KasirPro_Report_$ts.csv"
+        // Build CSV content dulu ke String
+        val sw = java.io.StringWriter()
+        CSVPrinter(sw, CSVFormat.DEFAULT).use { printer ->
                 // Summary
                 printer.printRecord("METRIK", "NILAI")
                 printer.printRecord("Total Penjualan", state.dailySales.toString())
@@ -220,7 +219,31 @@ fun exportCSV(state: ReportUiState, context: android.content.Context) {
                 }
             }
         }
-        Toast.makeText(context, "Export berhasil! (${file.name})", Toast.LENGTH_LONG).show()
+        val csvContent = sw.toString()
+        // Android Q+ pakai MediaStore, bawah pakai File API
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            val values = android.content.ContentValues().apply {
+                put(android.provider.MediaStore.Downloads.DISPLAY_NAME, fileName)
+                put(android.provider.MediaStore.Downloads.MIME_TYPE, "text/csv")
+                put(android.provider.MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
+                put(android.provider.MediaStore.Downloads.IS_PENDING, 1)
+            }
+            val resolver = context.contentResolver
+            val uri = resolver.insert(android.provider.MediaStore.Downloads.EXTERNAL_CONTENT_URI, values)
+            if (uri != null) {
+                resolver.openOutputStream(uri)?.use { out -> out.write(csvContent.toByteArray()) }
+                values.clear(); values.put(android.provider.MediaStore.Downloads.IS_PENDING, 0)
+                resolver.update(uri, values, null, null)
+                Toast.makeText(context, "Export berhasil! ($fileName)", Toast.LENGTH_LONG).show()
+            } else Toast.makeText(context, "Export gagal: MediaStore null", Toast.LENGTH_LONG).show()
+        } else {
+            @Suppress("DEPRECATION")
+            val downloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            if (!downloads.exists()) downloads.mkdirs()
+            val file = File(downloads, fileName)
+            FileWriter(file).use { it.write(csvContent) }
+            Toast.makeText(context, "Export berhasil! (${file.name})", Toast.LENGTH_LONG).show()
+        }
     } catch (e: Exception) {
         Toast.makeText(context, "Export gagal: ${e.message}", Toast.LENGTH_LONG).show()
     }

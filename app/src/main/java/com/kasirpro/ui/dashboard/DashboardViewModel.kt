@@ -54,13 +54,9 @@ class DashboardViewModel @Inject constructor(
         val query = _state.value.searchQuery
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
-            val products = if (query.isNotBlank()) {
-                repo.searchProducts(query)
-            } else if (cat != "Semua") {
-                repo.getProductsByCategory(cat)
-            } else {
-                repo.getAllProducts()
-            }
+            // Kombinasi: search + kategori = AND (bukan OR) biar filter akurat
+            val base = if (cat != "Semua") repo.getProductsByCategory(cat) else repo.getAllProducts()
+            val products = if (query.isNotBlank()) base.filter { it.name.contains(query, ignoreCase = true) } else base
             _state.update { it.copy(products = products, isLoading = false) }
         }
     }

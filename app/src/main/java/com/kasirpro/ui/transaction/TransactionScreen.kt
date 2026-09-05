@@ -133,7 +133,7 @@ fun TransactionScreen(
                     )
                     android.widget.Toast.makeText(context, "Transaksi berhasil!", android.widget.Toast.LENGTH_LONG).show()
                 },
-                enabled = state.cart.isNotEmpty() && state.selectedTableNumber.isNotBlank(),
+                enabled = state.cart.isNotEmpty(),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp)
