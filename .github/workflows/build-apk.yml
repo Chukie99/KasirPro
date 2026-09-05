@@ -38,6 +38,14 @@ jobs:
           api-level: 34
           build-tools-version: '34.0.0'
 
+      - name: Generate release keystore (CI)
+        run: |
+          mkdir -p keystore
+          if [ ! -f keystore/release.keystore ]; then
+            keytool -genkeypair -keystore keystore/release.keystore -alias kasirpro -keyalg RSA -keysize 2048 -validity 10000 -storepass kasirpro123 -keypass kasirpro123 -dname "CN=KasirPro, OU=Dev, O=KasirPro, L=Jakarta, ST=DKI, C=ID"
+          fi
+          ls -lh keystore/release.keystore
+
       - name: Build release APK
         run: ./gradlew assembleRelease --no-daemon --stacktrace
 
