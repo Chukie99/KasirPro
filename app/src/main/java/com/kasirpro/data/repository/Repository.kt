@@ -1,5 +1,6 @@
 package com.kasirpro.data.repository
 
+import androidx.room.withTransaction
 import com.kasirpro.data.database.AppDatabase
 import com.kasirpro.data.database.TransactionDao
 import com.kasirpro.data.model.Product
@@ -44,6 +45,32 @@ class Repository(private val db: AppDatabase) {
     suspend fun getTransactionsBetween(start: Long, end: Long): List<TransactionEntity> =
         db.transactionDao().getTransactionsBetween(start, end)
     suspend fun addTransaction(tx: TransactionEntity): Long = db.transactionDao().insert(tx)
+
+    /**
+     * Atomic checkout: insert transaction + decrement stock + mark table Terisi.
+     * All inside single Room transaction so no partial state if crash mid-sale.
+     */
+    suspend fun checkout(
+        tx: TransactionEntity,
+        items: List<TransactionItem>,
+        tableId: Long?,
+    ): Long = db.withTransaction {
+        val id = db.transactionDao().insert(tx)
+        // Decrement stock per product (clamp to 0, never negative)
+        for (item in items) {
+            val product = db.productDao().getProduct(item.productId) ?: continue
+            val newStock = maxOf(0, product.stock - item.quantity)
+            db.productDao().updateStock(item.productId, newStock)
+        }
+        // Mark table as Terisi if a table was selected
+        if (tableId != null && tableId != 0L) {
+            val table = db.tableDao().getTable(tableId)
+            if (table != null && table.status != "Terisi") {
+                db.tableDao().update(table.copy(status = "Terisi"))
+            }
+        }
+        id
+    }
 
     fun parseItems(json: String): List<TransactionItem> {
         val arr = gson.fromJson(json, Array<TransactionItem>::class.java)

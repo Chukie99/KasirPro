@@ -76,8 +76,14 @@ class TransactionViewModel @Inject constructor(
         }
     }
 
+    private fun recalc(subtotal: Long, discount: Long): Pair<Long, Long> {
+        val afterDiscount = maxOf(0L, subtotal - discount)
+        val tax = (afterDiscount * _state.value.taxPercent / 100.0).toLong()
+        val total = afterDiscount + tax
+        return tax to total
+    }
+
     fun updateQty(productId: Long, newQty: Int) {
-        // Rebuild cart — in a full app we'd have a more granular update.
         val current = _state.value.cart.toMutableList()
         val idx = current.indexOfFirst { it.productId == productId }
         if (idx >= 0) {
@@ -89,10 +95,7 @@ class TransactionViewModel @Inject constructor(
             }
         }
         val subtotal = current.sumOf { it.subtotal }
-        val taxRate = _state.value.taxPercent / 100.0
-        val tax = (subtotal * taxRate).toLong()
-        val discount = _state.value.discountAmount
-        val total = subtotal - discount + tax
+        val (tax, total) = recalc(subtotal, _state.value.discountAmount)
         _state.update {
             it.copy(cart = current, subtotal = subtotal, taxAmount = tax, grandTotal = total)
         }
@@ -101,30 +104,25 @@ class TransactionViewModel @Inject constructor(
     fun removeItem(productId: Long) {
         val current = _state.value.cart.filterNot { it.productId == productId }
         val subtotal = current.sumOf { it.subtotal }
-        val taxRate = _state.value.taxPercent / 100.0
-        val tax = (subtotal * taxRate).toLong()
-        val discount = _state.value.discountAmount
-        val total = subtotal - discount + tax
+        val (tax, total) = recalc(subtotal, _state.value.discountAmount)
         _state.update {
             it.copy(cart = current, subtotal = subtotal, taxAmount = tax, grandTotal = total)
         }
     }
 
     fun addToCart(product: com.kasirpro.data.model.Product, qty: Int = 1) {
+        if (qty <= 0) return
         val current = _state.value.cart.toMutableList()
         val idx = current.indexOfFirst { it.productId == product.id }
         if (idx >= 0) {
             val item = current[idx]
-            current[idx] = item.copy(quantity = item.quantity + qty, subtotal = product.price * (item.quantity + qty))
+            val newQty = item.quantity + qty
+            current[idx] = item.copy(quantity = newQty, subtotal = product.price * newQty)
         } else {
-            current.add(
-                CartItem(product.id, product, qty, product.price * qty)
-            )
+            current.add(CartItem(product.id, product, qty, product.price * qty))
         }
         val subtotal = current.sumOf { it.subtotal }
-        val taxRate = _state.value.taxPercent / 100.0
-        val tax = (subtotal * taxRate).toLong()
-        val total = subtotal - _state.value.discountAmount + tax
+        val (tax, total) = recalc(subtotal, _state.value.discountAmount)
         _state.update {
             it.copy(cart = current, subtotal = subtotal, taxAmount = tax, grandTotal = total)
         }
@@ -161,7 +159,16 @@ class TransactionViewModel @Inject constructor(
         )
 
         viewModelScope.launch {
-            repo.addTransaction(tx)
+            val cartItems = s.cart.map {
+                TransactionItem(
+                    productId = it.productId,
+                    productName = it.product.name,
+                    quantity = it.quantity,
+                    price = it.product.price,
+                    subtotal = it.subtotal,
+                )
+            }
+            repo.checkout(tx, cartItems, tableObj?.id)
             _state.update { st ->
                 st.copy(
                     isComplete = true,
@@ -170,6 +177,7 @@ class TransactionViewModel @Inject constructor(
                     subtotal = 0L,
                     discountInput = "",
                     discountAmount = 0L,
+                    taxAmount = 0L,
                     grandTotal = 0L,
                 )
             }
