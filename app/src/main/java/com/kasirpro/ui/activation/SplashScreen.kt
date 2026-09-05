@@ -50,9 +50,16 @@ fun SplashScreen(onTimeout: () -> Unit) {
                 color = MaterialTheme.colorScheme.onPrimary,
             )
             Text(
-                text = "Smart Kasir untuk UMKM",
-                fontSize = 14.sp,
-                color = MaterialTheme.colorScheme.onPrimary.copy(0.8f),
+                text = "Tenang. Rapi. Berkelas.",
+                fontSize = 13.sp,
+                letterSpacing = 1.2.sp,
+                color = MaterialTheme.colorScheme.onPrimary.copy(0.92f),
+            )
+            Spacer(Modifier.height(4.dp))
+            Text(
+                text = "Point of Sale untuk Usaha Modern",
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.onPrimary.copy(0.72f),
             )
         }
     }

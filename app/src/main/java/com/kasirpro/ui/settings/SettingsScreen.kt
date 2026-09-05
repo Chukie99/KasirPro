@@ -116,10 +116,14 @@ fun SettingsScreen(
                 }
             }
 
-            // ── Tentang ──
+            // ── Tentang — Premium ──
             SettingsSection("Tentang") {
-                Text("KasirPro ${state.version}", fontWeight = FontWeight.Bold)
-                Text("© 2026 Chukie99")
+                Text("KasirPro ${state.version} — Premium Edition", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+                Text("Tenang. Rapi. Berkelas.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("Point of Sale untuk Usaha Modern", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Spacer(Modifier.height(6.dp))
+                Text("100% Offline • Tanpa Iklan • Data Milik Anda", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.7f))
+                Text("© 2026 Chukie99", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.6f), modifier = Modifier.padding(top = 2.dp))
             }
 
             // Save button (sticky at bottom)

@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">KasirPro</string>
-    <string name="app_version">v1.1.4</string>
-    <string name="app_copyright">© 2025 KasirPro. All rights reserved.</string>
-    <string name="app_developer">Developed by Chukie99</string>
+    <string name="app_version">v1.1.5</string>
+    <string name="app_copyright">© 2026 KasirPro. All rights reserved.</string>
+    <string name="app_developer">Dikurasi oleh Chukie99</string>
 
-    <!-- Splash / Activation -->
-    <string name="activation_title">Aktivasi Aplikasi</string>
-    <string name="activation_instructions">Kirim Device ID ke Admin untuk mendapatkan Serial Number</string>
-    <string name="activation_hint">Masukkan Serial Number</string>
-    <string name="activation_button">Aktifkan</string>
-    <string name="activation_success">Aktivasi berhasil! Selamat datang di KasirPro.</string>
-    <string name="activation_invalid">Serial Number tidak valid!</string>
-    <string name="activation_empty_device_id">Device ID kosong, coba restart aplikasi.</string>
+    <!-- Splash -->
+    <string name="splash_tagline">Tenang. Rapi. Berkelas.</string>
+    <string name="splash_subtitle">Point of Sale untuk Usaha Modern</string>
+
+    <!-- Activation — Premium -->
+    <string name="activation_title">Aktivasi Premium</string>
+    <string name="activation_instructions">Masukkan 8 karakter serial untuk membuka akses premium. Device ID unik untuk perangkat ini.</string>
+    <string name="activation_hint">Serial Number (8 karakter)</string>
+    <string name="activation_button">Buka Akses</string>
+    <string name="activation_success">Akses Premium Dibuka — Selamat datang di KasirPro.</string>
+    <string name="activation_invalid">Serial tidak valid. Periksa kembali.</string>
+    <string name="activation_empty_device_id">Device ID kosong, coba mulai ulang aplikasi.</string>
     <string name="activation_copy_device_id">Salin Device ID</string>
 
     <!-- Dashboard -->
@@ -94,6 +98,12 @@
     <string name="settings_backup_success">Backup berhasil!</string>
     <string name="settings_about">Tentang</string>
 
+    <!-- About — Premium -->
+    <string name="about_edition">Premium Edition</string>
+    <string name="about_tagline">Tenang. Rapi. Berkelas.</string>
+    <string name="about_subtitle">Point of Sale untuk Usaha Modern</string>
+    <string name="about_offline">100% Offline • Tanpa Iklan • Data Milik Anda</string>
+
     <!-- Misc -->
     <string name="cancel">Batal</string>
     <string name="save">Simpan</string>
@@ -103,7 +113,7 @@
     <string name="loading">Memuat…</string>
     <string name="error_generic">Terjadi kesalahan. Coba lagi nanti.</string>
 
-    <!-- Navigation (bottom bar) -->
+    <!-- Navigation -->
     <string name="nav_dashboard">Dashboard</string>
     <string name="nav_transaction">Transaksi</string>
     <string name="nav_report">Laporan</string>

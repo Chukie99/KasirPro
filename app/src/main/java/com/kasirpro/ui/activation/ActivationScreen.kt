@@ -59,9 +59,9 @@ fun ActivationScreen(
                 modifier = Modifier.size(72.dp),
             )
             Spacer(Modifier.height(16.dp))
-            Text("Aktivasi Aplikasi", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+            Text("Aktivasi Premium", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
             Text(
-                "Kirim Device ID ke Admin untuk mendapatkan Serial Number",
+                "Masukkan 8 karakter serial untuk membuka akses premium. Device ID unik untuk perangkat ini.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = 8.dp),
@@ -95,7 +95,7 @@ fun ActivationScreen(
             OutlinedTextField(
                 value = state.serialInput,
                 onValueChange = { if (it.length <= 8) viewModel.onSerialChange(it) },
-                label = { Text("Masukkan Serial Number (8 karakter)") },
+                label = { Text("Serial Number (8 karakter)") },
                 singleLine = true,
                 isError = state.errorMessage?.isNotEmpty() == true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
@@ -116,7 +116,7 @@ fun ActivationScreen(
                 if (state.isChecking) {
                     CircularProgressIndicator(Modifier.size(20.dp), color = MaterialTheme.colorScheme.onPrimary, strokeWidth = 2.dp)
                 } else {
-                    Text("Aktifkan", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
+                    Text("Buka Akses", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
                 }
             }
         }

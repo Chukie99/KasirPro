@@ -20,7 +20,7 @@ data class SettingsUiState(
     val isConnectedPrinter: Boolean = false,
     val printerName: String = "",
     val isLoading: Boolean = false,
-    val version: String = "v1.0.0",
+    val version: String = "v1.1.5",
     val themeMode: String = "system",
 )
 
@@ -45,7 +45,7 @@ class SettingsViewModel @Inject constructor(
             _state.value = _state.value.copy(
                 taxRate = repo.getInt(Setting.KEY_TAX_RATE, 11).toString(),
                 defaultDiscount = repo.getInt(Setting.KEY_DEFAULT_DISCOUNT, 0).toString(),
-                version = "v1.0.0",
+                version = "v1.1.5",
             )
         }
     }
