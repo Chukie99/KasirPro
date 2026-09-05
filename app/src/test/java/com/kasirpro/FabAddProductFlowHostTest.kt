@@ -2,21 +2,32 @@ package com.kasirpro
 
 import org.junit.Assert.*
 import org.junit.Test
+import java.io.File
 
 /**
- * Host unit tests — TIGHT loop for logic yang rawan FC Tambah Produk.
- * Sengaja TIDAK pakai runComposeUiTest / Robolectric di CI ringan (OOM di ubuntu-latest)
- * — validasi logic murni dulu biar QC gate hijau & rilis kebuka.
- * Compose UI full (FAB→AddProductScreen) naik ke androidTest (emulator) next.
+ * Host unit tests — TIGHT loop untuk logika rawan FC Tambah Produk.
+ * Dijalankan di GitHub Actions (QC gate) — harus HIJAU dulu baru rilis.
+ * File source dicari via beberapa kandidat path biar work di CI (projectDir = app/)
+ * maupun lokal.
  */
 class FabAddProductFlowHostTest {
 
+    private fun findSrc(relativeFromApp: String): File {
+        // relativeFromApp contoh: "src/main/java/com/kasirpro/ui/product/AddProductScreen.kt"
+        val candidates = listOf(
+            File(relativeFromApp),
+            File("app/$relativeFromApp"),
+            File("../app/$relativeFromApp"),
+            File(System.getProperty("user.dir") + "/" + relativeFromApp),
+            File(System.getProperty("user.dir") + "/app/" + relativeFromApp),
+        )
+        return candidates.firstOrNull { it.exists() } ?: candidates.first()
+    }
+
     @Test
     fun price_onlyDigits_allowed() {
-        val ok = "3000".all { it.isDigit() }
-        val bad = "30a0".all { it.isDigit() }
-        assertTrue(ok)
-        assertFalse(bad)
+        assertTrue("3000".all { it.isDigit() })
+        assertFalse("30a0".all { it.isDigit() })
     }
 
     @Test
@@ -37,26 +48,27 @@ class FabAddProductFlowHostTest {
 
     @Test
     fun productCard_placeholder_is_vector_icon_not_adaptive_drawable() {
-        // Regression: AddProductScreen dulu pakai painterResource(R.drawable.ic_launcher) + tint
-        // → VectorDrawable adaptive + tint = crash di sebagian device.
-        // Fix: Icons.Default.Image. Test ini jaga regresi via code search (manual review),
-        // bukan render — cukup assert fix masih tertulis di file (dibaca saat test).
-        val source = java.io.File("app/src/main/java/com/kasirpro/ui/product/AddProductScreen.kt").readText()
-        assertFalse("masih pakai painterResource ic_launcher + tint = rawan FC", source.contains("painterResource(R.drawable.ic_launcher)"))
-        assertTrue("harus pakai Icons.Default.Image", source.contains("Icons.Default.Image"))
+        val f = findSrc("src/main/java/com/kasirpro/ui/product/AddProductScreen.kt")
+        assertTrue("source tidak ketemu: ${f.absolutePath}", f.exists())
+        val src = f.readText()
+        assertFalse("masih pakai painterResource ic_launcher + tint = rawan FC", src.contains("painterResource(R.drawable.ic_launcher)"))
+        assertTrue("harus pakai Icons.Default.Image", src.contains("Icons.Default.Image"))
     }
 
     @Test
     fun expanded_state_is_topLevel_not_inside_Column() {
-        // Regresi H2: var expanded sempat double-declare di dalam Column → shadowing
-        val src = java.io.File("app/src/main/java/com/kasirpro/ui/product/AddProductScreen.kt").readText()
+        val f = findSrc("src/main/java/com/kasirpro/ui/product/AddProductScreen.kt")
+        assertTrue(f.exists())
+        val src = f.readText()
         val count = "var expanded by remember".toRegex().findAll(src).count()
         assertEquals("expanded harus 1 deklarasi di top-level composable, bukan 2", 1, count)
     }
 
     @Test
     fun navigation_add_product_routes_exist() {
-        val nav = java.io.File("app/src/main/java/com/kasirpro/ui/main/MainScreen.kt").readText()
+        val f = findSrc("src/main/java/com/kasirpro/ui/main/MainScreen.kt")
+        assertTrue("MainScreen tidak ketemu: ${f.absolutePath}", f.exists())
+        val nav = f.readText()
         assertTrue(nav.contains("composable(\"add_product\")"))
         assertTrue(nav.contains("composable(\"add_product/{productId}\")"))
         assertTrue(nav.contains("navController.navigate(\"add_product\")"))
