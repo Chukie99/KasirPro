@@ -66,13 +66,8 @@ class ActivationViewModel @Inject constructor(
         viewModelScope.launch {
             _state.value = currentState.copy(isChecking = true, errorMessage = null)
 
-            // Get the raw Android ID for serial checking
-            val rawAndroidId = android.provider.Settings.Secure.getString(
-                context.contentResolver,
-                android.provider.Settings.Secure.ANDROID_ID
-            ) ?: ""
-
-            val result = SerialValidator.validate(serial, rawAndroidId)
+            // Validate against the 8-char Device ID shown to user (must match admin HTML)
+            val result = SerialValidator.validate(serial, deviceId)
 
             if (result.isSuccess) {
                 // Persist activation
