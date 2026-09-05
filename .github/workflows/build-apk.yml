@@ -51,7 +51,7 @@ jobs:
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: kasirpro-${{ github.ref_name }}
+          name: kasirpro-apk-${{ github.run_number }}
           path: ${{ steps.apk.outputs.apk }}
 
       - name: Create / publish GitHub Release
