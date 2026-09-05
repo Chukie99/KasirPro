@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Analytics
 import androidx.compose.material.icons.filled.Settings
+import com.kasirpro.data.model.Product
 import com.kasirpro.R
 
 private val bottomNavRoutes = setOf("dashboard", "transaction", "report", "settings")
@@ -87,7 +88,7 @@ fun MainScreen() {
             composable("settings") { SettingsScreen() }
             composable("product") {
                 ProductScreen(
-                    onEditProduct = { product ->
+                    onEditProduct = { product: Product ->
                         navController.navigate("add_product/${product.id}")
                     },
                     onAddProduct = { navController.navigate("add_product") },
@@ -106,7 +107,7 @@ fun MainScreen() {
             composable("table") {
                 TableScreen(
                     onAddTable = { navController.navigate("add_table") },
-                    onEditTable = { table ->
+                    onEditTable = { table: com.kasirpro.data.model.Table ->
                         navController.navigate("add_table/${table.id}")
                     },
                 )

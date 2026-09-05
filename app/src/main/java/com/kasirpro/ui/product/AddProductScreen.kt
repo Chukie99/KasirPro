@@ -145,7 +145,7 @@ fun AddProductScreen(
                     onValueChange = {},
                     readOnly = true,
                     label = { Text("Kategori") },
-                    modifier = Modifier.fillMaxWidth().menuAnchor(MenuAnchorType.PrimaryNotEditable),
+                    modifier = Modifier.fillMaxWidth().menuAnchor(),
                     trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null) },
                 )
                 ExposedDropdownMenu(
