@@ -217,7 +217,6 @@ fun exportCSV(state: ReportUiState, context: android.content.Context) {
                         printer.printRecord("Meja $number", count.toString())
                     }
                 }
-            }
         }
         val csvContent = sw.toString()
         // Android Q+ pakai MediaStore, bawah pakai File API
