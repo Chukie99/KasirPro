@@ -76,6 +76,10 @@ android {
         unitTests {
             includeAndroidResources = true
             returnDefaultValues = true
+            all {
+                jvmArgs '-Xmx3g', '-XX:+HeapDumpOnOutOfMemoryError'
+                maxHeapSize = "3g"
+            }
         }
     }
 
