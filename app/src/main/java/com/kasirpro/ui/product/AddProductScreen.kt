@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -17,11 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.kasirpro.R
 import com.kasirpro.utils.ImageHelper
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,6 +38,7 @@ fun AddProductScreen(
     var category by remember { mutableStateOf("Makanan") }
     var imagePath by remember { mutableStateOf<String?>(null) }
     var showNameError by remember { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(false) }
     val isEditing = editProductId != null
 
     LaunchedEffect(editProductId) {
@@ -74,7 +74,6 @@ fun AddProductScreen(
                 if (name.isBlank()) { showNameError = true; return@FloatingActionButton }
                 val p = price.toLongOrNull() ?: 0L
                 val s = stock.toIntOrNull() ?: 0
-                // clamp negatives
                 val safeP = if (p < 0) 0L else p
                 val safeS = if (s < 0) 0 else s
                 if (isEditing && editProductId != null) {
@@ -84,10 +83,7 @@ fun AddProductScreen(
                 }
                 onProductSaved()
             }) {
-                Icon(
-                    imageVector = Icons.Default.Save,
-                    contentDescription = "Simpan",
-                )
+                Icon(imageVector = Icons.Default.Save, contentDescription = "Simpan")
             }
         },
     ) { padding ->
@@ -103,7 +99,7 @@ fun AddProductScreen(
                 if (imagePath != null) {
                     AsyncImage(model = imagePath, contentDescription = "Product image", contentScale = ContentScale.Crop, modifier = Modifier.matchParentSize())
                 } else {
-                    Icon(painterResource(R.drawable.ic_launcher), contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(32.dp))
+                    Icon(Icons.Default.Image, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(32.dp))
                 }
             }
             Text("Ketuk untuk pilih gambar", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 4.dp))
@@ -134,7 +130,6 @@ fun AddProductScreen(
                 singleLine = true
             )
 
-            var expanded by remember { mutableStateOf(false) }
             ExposedDropdownMenuBox(
                 expanded = expanded,
                 onExpandedChange = { expanded = !expanded },

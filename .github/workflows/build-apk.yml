@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   build:
-    name: Build release APK
+    name: Build release APK (with QC gate)
     runs-on: ubuntu-latest
 
     steps:
@@ -26,8 +26,6 @@ jobs:
           java-version: '17'
 
       - name: Download Gradle wrapper jar
-        # Our gradlew script needs gradle-wrapper.jar to bootstrap;
-        # grab a minimal shim so ./gradlew works.
         run: |
           mkdir -p gradle/wrapper
           if [ ! -f gradle/wrapper/gradle-wrapper.jar ]; then
@@ -48,6 +46,22 @@ jobs:
             keytool -genkeypair -keystore keystore/release.keystore -alias kasirpro -keyalg RSA -keysize 2048 -validity 10000 -storepass kasirpro123 -keypass kasirpro123 -dname "CN=KasirPro, OU=Dev, O=KasirPro, L=Jakarta, ST=DKI, C=ID"
           fi
           ls -lh keystore/release.keystore
+
+      - name: "QC gate: host unit tests (Robolectric — FAB → Tambah Produk)"
+        run: ./gradlew testDebugUnitTest --stacktrace
+
+      - name: "QC gate: Android Lint"
+        run: ./gradlew lintDebug --stacktrace
+
+      - name: Upload QC reports on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qc-reports-${{ github.run_number }}
+          path: |
+            app/build/reports/tests/
+            app/build/reports/lint-results-debug.html
+            app/build/reports/lint-results-debug.xml
 
       - name: Build release APK
         run: ./gradlew assembleRelease --no-daemon --stacktrace

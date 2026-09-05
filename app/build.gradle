@@ -13,8 +13,8 @@ android {
         applicationId "com.kasirpro"
         minSdk 24      // Android 7.0 Nougat
         targetSdk 34   // Android 14
-        versionCode 6
-        versionName "1.1.5"
+        versionCode 7
+        versionName "1.1.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // Enable Room schema export for migration tracking
@@ -70,6 +70,11 @@ android {
 
     lint {
         abortOnError false
+    }
+
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+        unitTests.returnDefaultValues = true
     }
 
     applicationVariants.configureEach { variant ->
@@ -139,8 +144,18 @@ dependencies {
     // ── QR Code (QRIS placeholder scan — optional) ─────────────
     // ML Kit barcode scanning removed - not yet implemented
 
-    // ── Testing ─────────────────────────────────────────────────
+    // ── Testing — host (Robolectric) + instrumentation ───────────
+    // Host tests (src/test) — Robolectric + Compose ui-test
     testImplementation "junit:junit:4.13.2"
+    testImplementation "org.robolectric:robolectric:4.13"
+    testImplementation "androidx.test.ext:junit:1.2.1"
+    testImplementation "androidx.compose.ui:ui-test"
+    testImplementation "androidx.compose.ui:ui-test-junit4"
+    testImplementation "androidx.compose.ui:ui-test-manifest"
+    // Manifest helper for createComposeRule (must be debugImplementation)
+    debugImplementation "androidx.compose.ui:ui-test-manifest"
+    // Instrumentation (src/androidTest)
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4"
     androidTestImplementation "androidx.test.ext:junit:1.2.1"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.6.1"
 }
