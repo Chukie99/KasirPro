@@ -151,17 +151,17 @@ dependencies {
     // ML Kit barcode scanning removed - not yet implemented
 
     // ── Testing — host (Robolectric) + instrumentation ───────────
-    // Host tests (src/test) — Robolectric + Compose ui-test
+    // Host tests (src/test) — Robolectric + Compose ui-test (pin 1.6.8 sama kayak implementation)
     testImplementation "junit:junit:4.13.2"
     testImplementation "org.robolectric:robolectric:4.13"
     testImplementation "androidx.test.ext:junit:1.2.1"
-    testImplementation "androidx.compose.ui:ui-test"
-    testImplementation "androidx.compose.ui:ui-test-junit4"
-    testImplementation "androidx.compose.ui:ui-test-manifest"
+    testImplementation "androidx.compose.ui:ui-test:1.6.8"
+    testImplementation "androidx.compose.ui:ui-test-junit4:1.6.8"
+    testImplementation "androidx.compose.ui:ui-test-manifest:1.6.8"
     // Manifest helper for createComposeRule (must be debugImplementation)
-    debugImplementation "androidx.compose.ui:ui-test-manifest"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:1.6.8"
     // Instrumentation (src/androidTest)
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.6.8"
     androidTestImplementation "androidx.test.ext:junit:1.2.1"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.6.1"
 }
