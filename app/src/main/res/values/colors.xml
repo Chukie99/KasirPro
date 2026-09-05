@@ -1,39 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- ===== KasirPro Blue Pastel Palette (Google Blue, NOT Purple) ===== -->
+    <!-- ===== KasirPro PREMIUM palette — Ink Navy + Warm Ivory + Brass ===== -->
+    <!-- Deep premium — kayak private banking / boutique POS -->
 
-    <!-- Primary: Google Blue -->
-    <color name="primary">#1A73E8</color>
-    <color name="primary_light">#E8F0FE</color>
-    <color name="primary_dark">#1557B0</color>
+    <!-- Primary: Ink Navy (deep, mahal — bukan biru cerah) -->
+    <color name="primary">#0F2440</color>
+    <color name="primary_light">#E8EDF3</color>
+    <color name="primary_dark">#0A1628</color>
+    <color name="primary_container">#122E57</color>
 
-    <!-- Secondary: Green -->
-    <color name="secondary">#34A853</color>
-    <color name="secondary_light">#E6F4EA</color>
+    <!-- Secondary: Brass / Warm Gold (aksen mewah, bukan hijau murahan) -->
+    <color name="secondary">#C5A059</color>
+    <color name="secondary_light">#F5EEDD</color>
+    <color name="secondary_dark">#8C7040</color>
 
-    <!-- Tertiary: Amber/Yellow -->
-    <color name="tertiary">#FBBC04</color>
+    <!-- Tertiary: Warm Taupe (netral elegan) -->
+    <color name="tertiary">#8B7355</color>
+    <color name="tertiary_light">#F0E6D8</color>
 
-    <!-- Surfaces -->
+    <!-- Surfaces — Warm Ivory, bukan abu abu dingin -->
     <color name="surface">#FFFFFF</color>
-    <color name="background">#F5F7FA</color>
+    <color name="background">#FAF7F2</color>
+    <color name="surface_variant">#F2EFE9</color>
 
-    <!-- Text -->
-    <color name="text_primary">#1A1A1A</color>
-    <color name="text_secondary">#5F6368</color>
+    <!-- Text — Ink, bukan hitam pekat -->
+    <color name="text_primary">#101828</color>
+    <color name="text_secondary">#667085</color>
+    <color name="text_tertiary">#98A2B3</color>
 
     <!-- Status -->
-    <color name="error">#D93025</color>
-    <color name="success">#34A853</color>
-    <color name="warning">#FBBC04</color>
+    <color name="error">#8B2635</color>
+    <color name="success">#2E7D32</color>
+    <color name="warning">#B7791F</color>
 
-    <!-- Additional neutrals -->
-    <color name="surface_variant">#F1F3F5</color>
-    <color name="outline">#D1D5DB</color>
-    <color name="shadow">#0000001F</color>
+    <!-- Neutrals -->
+    <color name="outline">#E5E7EB</color>
+    <color name="outline_variant">#F3F4F6</color>
+    <color name="shadow">#0F24401A</color>
+    <color name="scrim">#0F244066</color>
 
-    <!-- Table status colors -->
-    <color name="table_empty">#34A853</color>      <!-- Hijau Kosong -->
-    <color name="table_occupied">#D93025</color>  <!-- Merah Terisi -->
-    <color name="table_reserved">#FBBC04</color>  <!-- Kuning Reservasi -->
+    <!-- Table status — muted premium (bukan merah menyala) -->
+    <color name="table_empty">#2E7D32</color>
+    <color name="table_occupied">#8B2635</color>
+    <color name="table_reserved">#B7791F</color>
 </resources>

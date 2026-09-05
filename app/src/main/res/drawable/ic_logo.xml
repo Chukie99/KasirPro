@@ -4,23 +4,47 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- Background circle (Google blue pastel) -->
+    <!-- Ivory circle — warm premium, bukan biru pastel murahan -->
     <path
-        android:fillColor="#E8F0FE"
+        android:fillColor="#FAF7F2"
         android:pathData="M54,6 C27.5,6 6,27.5 6,54 C6,80.5 27.5,102 54,102 C80.5,102 102,80.5 102,54 C102,27.5 80.5,6 54,6 Z" />
-    <!-- Cash register body -->
+    <!-- Thin brass ring -->
     <path
-        android:fillColor="#1A73E8"
-        android:pathData="M36,36 L72,36 L72,72 L36,72 Z M40,40 L40,68 L68,68 L68,40 Z" />
-    <!-- Top button row -->
+        android:fillColor="#00000000"
+        android:strokeColor="#C5A059"
+        android:strokeWidth="1.2"
+        android:pathData="M54,6 C27.5,6 6,27.5 6,54 C6,80.5 27.5,102 54,102 C80.5,102 102,80.5 102,54 C102,27.5 80.5,6 54,6 Z" />
+    <!-- Navy POS card — centered -->
     <path
-        android:fillColor="#1A73E8"
-        android:pathData="M42,44 L66,44 L66,52 L42,52 Z" />
+        android:fillColor="#0F2440"
+        android:pathData="M34,34 H74 A6,6 0 0 1 80,40 V62 H28 V40 A6,6 0 0 1 34,34 Z" />
+    <!-- Ivory card body -->
     <path
-        android:fillColor="#1A73E8"
-        android:pathData="M42,56 L66,56 L66,64 L42,64 Z" />
-    <!-- Cash drawer slot -->
+        android:fillColor="#FFFFFF"
+        android:pathData="M32,50 H76 A6,6 0 0 1 82,56 V76 A6,6 0 0 1 76,82 H32 A6,6 0 0 1 26,76 V56 A6,6 0 0 1 32,50 Z" />
+    <!-- Brass hairline top of ivory card -->
     <path
-        android:fillColor="#34A853"
-        android:pathData="M38,78 L70,78 L70,84 L38,84 Z" />
+        android:fillColor="#C5A059"
+        android:pathData="M32,50 H76 A6,6 0 0 1 82,56 V58 H26 V56 A6,6 0 0 1 32,50 Z" />
+    <!-- Receipt lines — navy -->
+    <path
+        android:fillColor="#0F2440"
+        android:fillAlpha="0.90"
+        android:pathData="M32,62 H76 A1.5,1.5 0 0 1 77.5,63.5 V67 A1.5,1.5 0 0 1 76,68.5 H32 A1.5,1.5 0 0 1 30.5,67 V63.5 A1.5,1.5 0 0 1 32,62 Z" />
+    <path
+        android:fillColor="#0F2440"
+        android:fillAlpha="0.52"
+        android:pathData="M32,71 H68 A1.5,1.5 0 0 1 69.5,72.5 V76 A1.5,1.5 0 0 1 68,77.5 H32 A1.5,1.5 0 0 1 30.5,76 V72.5 A1.5,1.5 0 0 1 32,71 Z" />
+    <!-- Brass badge overlapping -->
+    <path
+        android:fillColor="#C5A059"
+        android:pathData="M54,74 m-9,0 a9,9 0 1,0 18,0 a9,9 0 1,0 -18,0" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FAF7F2"
+        android:strokeWidth="1.2"
+        android:pathData="M54,74 m-9,0 a9,9 0 1,0 18,0 a9,9 0 1,0 -18,0" />
+    <path
+        android:fillColor="#FAF7F2"
+        android:pathData="M49,78.5 L52.5,82 L60,74.5 L58.6,73.1 L52.5,79.2 L50.4,77.1 Z" />
 </vector>

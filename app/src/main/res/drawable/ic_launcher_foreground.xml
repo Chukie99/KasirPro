@@ -4,44 +4,52 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- Soft shadow behind card -->
+    <!-- Safe zone 22..86 — adaptif gak kepotong di Samsung/Xiaomi -->
+
+    <!-- Soft shadow under card -->
     <path
         android:fillColor="#14000000"
         android:pathData="M31,28 H79 A8,8 0 0 1 87,36 V77 A8,8 0 0 1 79,85 H31 A8,8 0 0 1 23,77 V36 A8,8 0 0 1 31,28 Z" />
-    <!-- Main white card — rounded 14, centered in safe zone (21..87) -->
+    <!-- Ivory card — warm premium, bukan putih klinis -->
     <path
-        android:fillColor="#FFFFFF"
+        android:fillColor="#FFFBF7F2"
         android:pathData="M30,26 H78 A8,8 0 0 1 86,34 V76 A8,8 0 0 1 78,84 H30 A8,8 0 0 1 22,76 V34 A8,8 0 0 1 30,26 Z" />
-    <!-- Top accent bar inside card (blue) -->
+    <!-- Thin brass hairline border -->
     <path
-        android:fillColor="#1A73E8"
+        android:fillColor="#00000000"
+        android:strokeColor="#C5A059"
+        android:strokeWidth="0.9"
+        android:pathData="M30,26 H78 A8,8 0 0 1 86,34 V76 A8,8 0 0 1 78,84 H30 A8,8 0 0 1 22,76 V34 A8,8 0 0 1 30,26 Z" />
+    <!-- Navy header — deep luxe -->
+    <path
+        android:fillColor="#0F2440"
         android:pathData="M30,26 H78 A8,8 0 0 1 86,34 V42 H22 V34 A8,8 0 0 1 30,26 Z" />
-    <!-- White dots on blue bar (window controls) -->
+    <!-- 3 brass dots — tiny luxury detail -->
     <path
-        android:fillColor="#FFFFFF"
-        android:fillAlpha="0.95"
-        android:pathData="M30,32 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0 M40,32 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0 M50,32 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" />
-    <!-- Receipt lines — blue, inside white area -->
+        android:fillColor="#C5A059"
+        android:pathData="M30,32 m-2.6,0 a2.6,2.6 0 1,0 5.2,0 a2.6,2.6 0 1,0 -5.2,0 M39.5,32 m-2.6,0 a2.6,2.6 0 1,0 5.2,0 a2.6,2.6 0 1,0 -5.2,0 M49,32 m-2.6,0 a2.6,2.6 0 1,0 5.2,0 a2.6,2.6 0 1,0 -5.2,0" />
+    <!-- Receipt line 1 — navy, rounded -->
     <path
-        android:fillColor="#1A73E8"
-        android:pathData="M30,50 H78 A2,2 0 0 1 80,52 V56 A2,2 0 0 1 78,58 H30 A2,2 0 0 1 28,56 V52 A2,2 0 0 1 30,50 Z" />
+        android:fillColor="#0F2440"
+        android:fillAlpha="0.92"
+        android:pathData="M30,50 H74 A2,2 0 0 1 76,52 V56 A2,2 0 0 1 74,58 H30 A2,2 0 0 1 28,56 V52 A2,2 0 0 1 30,50 Z" />
+    <!-- Receipt line 2 — shorter, lighter -->
     <path
-        android:fillColor="#1A73E8"
-        android:fillAlpha="0.90"
-        android:pathData="M30,62 H70 A2,2 0 0 1 72,64 V68 A2,2 0 0 1 70,70 H30 A2,2 0 0 1 28,68 V64 A2,2 0 0 1 30,62 Z" />
-    <!-- Green success badge overlapping bottom edge -->
+        android:fillColor="#0F2440"
+        android:fillAlpha="0.58"
+        android:pathData="M30,62 H66 A2,2 0 0 1 68,64 V68 A2,2 0 0 1 66,70 H30 A2,2 0 0 1 28,68 V64 A2,2 0 0 1 30,62 Z" />
+    <!-- Brass badge — not green (cheap), but gold luxe -->
     <path
-        android:fillColor="#34A853"
+        android:fillColor="#C5A059"
         android:pathData="M54,66 m-11,0 a11,11 0 1,0 22,0 a11,11 0 1,0 -22,0" />
-    <!-- White border ring around badge -->
+    <!-- White ring inside badge -->
     <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M54,66 m-11,0 a11,11 0 1,0 22,0 a11,11 0 1,0 -22,0 M54,66 m-9,0 a9,9 0 1,1 18,0 a9,9 0 1,1 -18,0 Z"
-        android:fillAlpha="0.0"
-        android:strokeColor="#FFFFFF"
-        android:strokeWidth="1.5" />
-    <!-- White checkmark inside green badge -->
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFBF7F2"
+        android:strokeWidth="1.4"
+        android:pathData="M54,66 m-8.2,0 a8.2,8.2 0 1,0 16.4,0 a8.2,8.2 0 1,0 -16.4,0" />
+    <!-- Check — ivory white -->
     <path
-        android:fillColor="#FFFFFF"
+        android:fillColor="#FFFBF7F2"
         android:pathData="M48.5,71.5 L52.8,75.8 L60.8,67.2 L59.2,65.6 L52.8,72.2 L50.1,69.5 Z" />
 </vector>

@@ -1,52 +1,59 @@
 package com.kasirpro.ui.theme
-
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 
-// ── KasirPro Blue-Pastel Color Scheme (Google Blue, NOT Purple) ────────────────
+// ── KasirPro PREMIUM — Ink Navy + Warm Ivory + Brass Gold ───────────────────
+// Vibe: private banking / boutique hotel POS — calm, expensive, confident.
+// Bukan biru Google norak, bukan hijau murahan.
 private val LightColors = lightColorScheme(
-    primary = Color(0xFF1A73E8),        // primary
+    primary = Color(0xFF0F2440),           // Ink Navy — deep, quiet luxury
     onPrimary = Color(0xFFFFFFFF),
-    primaryContainer = Color(0xFFE8F0FE),  // primary_light
-    onPrimaryContainer = Color(0xFF0F3C8C),
-    secondary = Color(0xFF34A853),     // secondary
-    onSecondary = Color(0xFFFFFFFF),
-    secondaryContainer = Color(0xFFE6F4EA),  // secondary_light
-    onSecondaryContainer = Color(0xFF127D3F),
-    tertiary = Color(0xFFFBBC04),      // tertiary
-    onTertiary = Color(0xFF1C1B1E),
-    tertiaryContainer = Color(0xFFFFECAD),
-    background = Color(0xFFF5F7FA),
-    onBackground = Color(0xFF1A1A1A),
+    primaryContainer = Color(0xFFE8EDF3),  // mist — soft navy tint
+    onPrimaryContainer = Color(0xFF0F2440),
+    secondary = Color(0xFFC5A059),         // Brass Gold — warm, expensive accent
+    onSecondary = Color(0xFF1A1A1A),
+    secondaryContainer = Color(0xFFF5EEDD),// warm ivory gold
+    onSecondaryContainer = Color(0xFF3D2E14),
+    tertiary = Color(0xFF8B7355),          // warm taupe
+    onTertiary = Color(0xFFFFFFFF),
+    tertiaryContainer = Color(0xFFF0E6D8),
+    background = Color(0xFFFAF7F2),        // Warm Ivory — not cold grey
+    onBackground = Color(0xFF101828),
     surface = Color(0xFFFFFFFF),
-    onSurface = Color(0xFF1A1A1A),
-    onSurfaceVariant = Color(0xFF5F6368),
-    error = Color(0xFFD93025),
+    onSurface = Color(0xFF101828),
+    onSurfaceVariant = Color(0xFF667085),  // muted, not #5F6368 murahan
+    surfaceVariant = Color(0xFFF2EFE9),    // warm stone
+    outline = Color(0xFFE5E7EB),
+    outlineVariant = Color(0xFFF3F4F6),
+    scrim = Color(0x660F2440),
+    error = Color(0xFF8B2635),             // muted burgundy, not menyala
     onError = Color(0xFFFFFFFF),
-    outline = Color(0xFFD1D5DB),
 )
 
 private val DarkColors = darkColorScheme(
-    primary = Color(0xFFE8F0FE),
-    onPrimary = Color(0xFF0F3C8C),
-    primaryContainer = Color(0xFF1557B0),
-    onPrimaryContainer = Color(0xFFE8F0FE),
-    secondary = Color(0xFF66BB6A),
-    onSecondary = Color(0xFF003319),
-    secondaryContainer = Color(0xFF1B5E20),
-    tertiary = Color(0xFFFFD54F),
-    onTertiary = Color(0xFF4D3500),
-    background = Color(0xFF0F172A),
-    onBackground = Color(0xFFE2E8F0),
-    surface = Color(0xFF1E293B),
-    onSurface = Color(0xFFF8FAFC),
+    primary = Color(0xFFC5A059),           // Gold leads in dark — luxury
+    onPrimary = Color(0xFF0F2440),
+    primaryContainer = Color(0xFF122E57),
+    onPrimaryContainer = Color(0xFFE8EDF3),
+    secondary = Color(0xFFD4B678),
+    onSecondary = Color(0xFF0F2440),
+    secondaryContainer = Color(0xFF2A1F0E),
+    tertiary = Color(0xFFD9C5A5),
+    onTertiary = Color(0xFF2A1F0E),
+    background = Color(0xFF0A1628),        // deep navy night
+    onBackground = Color(0xFFE8EDF3),
+    surface = Color(0xFF12233F),           // navy surface, not #1E293B murahan
+    onSurface = Color(0xFFF1F5F9),
     onSurfaceVariant = Color(0xFF94A3B8),
-    error = Color(0xFFF2B8B5),
-    onError = Color(0xFF67001F),
-    outline = Color(0xFF475569),
+    surfaceVariant = Color(0xFF1A2F4D),
+    outline = Color(0xFF2D3F5E),
+    outlineVariant = Color(0xFF1E314D),
+    scrim = Color(0x990A1628),
+    error = Color(0xFFE8A0A8),
+    onError = Color(0xFF4A1018),
 )
 
 @Composable
