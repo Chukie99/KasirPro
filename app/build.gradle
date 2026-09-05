@@ -73,8 +73,10 @@ android {
     }
 
     testOptions {
-        unitTests.isIncludeAndroidResources = true
-        unitTests.returnDefaultValues = true
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+        }
     }
 
     applicationVariants.configureEach { variant ->
