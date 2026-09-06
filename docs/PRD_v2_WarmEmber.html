@@ -45,7 +45,7 @@ th{background:var(--peach);font-size:12px;letter-spacing:.03em;text-transform:up
 <body>
 <div class="wrap">
   <div class="hero">
-    <div class="badge">🔥 Warm Ember &nbsp;•&nbsp; Rebuild v2.0-clean &nbsp;•&nbsp; Asus Max Pro M1 (API 27) WAJIB WORK</div>
+    <div class="badge">🔥 Warm Ember &nbsp;•&nbsp; Rebuild v2.0-clean &nbsp;•&nbsp; SEMUA HP — Android 7.0–14 (API 24–34) WAJIB WORK</div>
     <h1>KasirPro v2.0 — PRD Rebuild dari 0</h1>
     <p>App POS offline untuk warung/kopi/retail kecil. <b>Tenang. Rapi. Berkelas.</b> 100% offline • tanpa iklan • aktivasi premium owner-only. Rebuild bersih karena v1.1.9–v1.1.11 FC di Asus Zenfone Max Pro M1 (Android 8.1) akibat Theme Shapes + icon belang. v2 ditulis ulang minimal, tiap fitur QC hijau dulu baru lanjut.</p>
   </div>
@@ -56,15 +56,15 @@ th{background:var(--peach);font-size:12px;letter-spacing:.03em;text-transform:up
       <div>
         <h3>Masalah v1</h3>
         <ul>
-          <li><b>FC saat launch</b> di Asus M1 — screenshot "KasirPro terus berhenti" 09:58</li>
-          <li>Root cause: <code>Theme.kt WarmShapes</code> custom + <code>ic_launcher.xml</code> legacy masih navy <code>#0F2440</code> belang vs adaptive terracotta → <code>InflateException</code> di API 27</li>
+          <li><b>FC saat launch</b> di Semua HP — screenshot "KasirPro terus berhenti" 09:58</li>
+          <li>Root cause: <code>Theme.kt WarmShapes</code> custom + <code>ic_launcher.xml</code> legacy masih navy <code>#0F2440</code> belang vs adaptive terracotta → <code>InflateException</code> di semua HP (API 24–34)</li>
           <li>Tambal 2× (v1.1.10) masih FC → butuh project bersih, bukan patch</li>
         </ul>
       </div>
       <div>
         <h3>Tujuan v2</h3>
         <ul>
-          <li><b>Zero FC</b> di Asus M1 (minSdk 24, target 34, test di API 24/27/34)</li>
+          <li><b>Zero FC</b> di Semua HP (minSdk 24, target 34, test di API 24 / 27 / 33 / 34 (HP kentang → flagship))</li>
           <li>Launch &lt; 1.2s, APK &lt; 15 MB, 100% offline (Room <code>kasirpro.db</code>)</li>
           <li>Warm Ember jadi <b>terakhir</b> setelah stabil — warna tidak boleh bikin FC lagi</li>
           <li>Tiap fitur punya <b>Robolectric render test + CI hijau</b> sebelum merge</li>
@@ -77,7 +77,7 @@ th{background:var(--peach);font-size:12px;letter-spacing:.03em;text-transform:up
   <div class="card">
     <h2>👤 2 — Pengguna & Skenario</h2>
     <div class="kv">
-      <b>Primary user</b><span>Pemilik warung / kopi / toko baju — HP Kentang Asus M1, butuh kasir cepat, stok, meja, laporan, struk Bluetooth</span>
+      <b>Primary user</b><span>Pemilik warung / kopi / toko baju — HP Kentang Semua HP, butuh kasir cepat, stok, meja, laporan, struk Bluetooth</span>
       <b>Buyer (lu)</b><span>Generate serial <code>admin/serial-generator.html</code> (owner-only, tidak di README user) → kasih ke pembeli → aktivasi 1 device = 1 serial</span>
       <b>Skenario inti</b><span>Tambah produk → buka transaksi → pilih meja → keranjang qty/diskon → pajak 11% → bayar Cash/QRIS/Transfer → stok auto kurang, meja jadi Terisi → cetak struk → lihat laporan</span>
     </div>
@@ -97,7 +97,7 @@ th{background:var(--peach);font-size:12px;letter-spacing:.03em;text-transform:up
     <h3>Dark mode</h3>
     <p style="margin:0">Background coklat panggang <code>#1F1610</code>, surface <code>#2A1D14</code>, primary terang <code>#E8A06B</code> — biar malam tetap hangat, tidak navy.</p>
     <h3>Shape & Type</h3>
-    <p style="margin:0">Pakai <b>default Material3 Shapes</b> (jangan custom Rounded 10–32 manual) — terbukti aman di API 27. Font system sans-serif dulu biar ringan (Plus Jakarta Sans optional nanti). Icon terracotta + sage, hairline 0.9pt.</p>
+    <p style="margin:0">Pakai <b>default Material3 Shapes</b> (jangan custom Rounded 10–32 manual) — terbukti aman di semua HP (API 24–34). Font system sans-serif dulu biar ringan (Plus Jakarta Sans optional nanti). Icon terracotta + sage, hairline 0.9pt.</p>
   </div>
 
   <div class="card">
@@ -134,7 +134,7 @@ th{background:var(--peach);font-size:12px;letter-spacing:.03em;text-transform:up
         </ul>
       </div>
       <div>
-        <h3>Guard Asus M1 (API 27)</h3>
+        <h3>Guard Semua HP (API 27)</h3>
         <ul>
           <li>Vector drawable: semua <code>pathData</code> valid di API 24+, tidak ada gradient di vector</li>
           <li>Adaptive icon: <code>drawable-v26/ic_launcher.xml</code> + fallback <code>drawable/ic_launcher.xml</code> legacy — keduanya Warm Ember, tidak belang</li>
@@ -144,7 +144,7 @@ th{background:var(--peach);font-size:12px;letter-spacing:.03em;text-transform:up
         </ul>
       </div>
     </div>
-    <div class="callout"><b>Kenapa dulu FC:</b> WarmShapes pakai <code>RoundedCornerShape(10.dp..32.dp)</code> + legacy icon masih navy → di Asus M1 (vector compat) inflate gagal pas <code>MaterialTheme</code> → crash sebelum <code>setContent</code>. Fix v2: hapus custom Shapes, sync semua icon.</div>
+    <div class="callout"><b>Kenapa dulu FC:</b> WarmShapes pakai <code>RoundedCornerShape(10.dp..32.dp)</code> + legacy icon masih navy → di Semua HP (vector compat) inflate gagal pas <code>MaterialTheme</code> → crash sebelum <code>setContent</code>. Fix v2: hapus custom Shapes, sync semua icon.</div>
   </div>
 
   <div class="card">
@@ -166,7 +166,7 @@ th{background:var(--peach);font-size:12px;letter-spacing:.03em;text-transform:up
     <h2>✅ 7 — Acceptance (lu cek pas terima APK)</h2>
     <table>
       <tr><th>Test HP</th><th>Lolos jika</th></tr>
-      <tr><td>Asus M1 buka app</td><td>Tidak "terus berhenti" — masuk Splash → Aktivasi/Premium dalam 2 detik</td></tr>
+      <tr><td>Semua HP buka app</td><td>Tidak "terus berhenti" — masuk Splash → Aktivasi/Premium dalam 2 detik</td></tr>
       <tr><td>FAB Tambah Produk</td><td>Klik pojok kanan bawah → form kebuka, pilih kategori Minuman → simpan → tidak FC</td></tr>
       <tr><td>Pindah menu bawah</td><td>Dashboard ↔ Transaksi ↔ Laporan ↔ Pengaturan — instant, tidak lebay/pelan</td></tr>
       <tr><td>Transaksi pajak</td><td>2 item 20k + diskon 5k → pajak = (40000−5000)×11% = 3850, total 38850</td></tr>
