@@ -1,11 +1,11 @@
 package com.kasirpro.ui.main
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.*
 import androidx.navigation.compose.rememberNavController
 import com.kasirpro.ui.dashboard.DashboardScreen
@@ -27,28 +27,25 @@ import com.kasirpro.R
 
 private val bottomNavRoutes = setOf("dashboard", "transaction", "report", "settings")
 
-/**
- * MainScreen — hosts BottomNavigation with 4 tabs:
- * Dashboard, Transaksi, Laporan, Pengaturan
- */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
-    val items = listOf(
-        BottomNavItem(stringResource(R.string.nav_dashboard), Icons.Default.Home, "dashboard") {
-            navController.navigate("dashboard") { launchSingleTop = true; restoreState = true }
-        },
-        BottomNavItem(stringResource(R.string.nav_transaction), Icons.Default.ShoppingCart, "transaction") {
-            navController.navigate("transaction") { launchSingleTop = true; restoreState = true }
-        },
-        BottomNavItem(stringResource(R.string.nav_report), Icons.Default.Analytics, "report") {
-            navController.navigate("report") { launchSingleTop = true; restoreState = true }
-        },
-        BottomNavItem(stringResource(R.string.nav_settings), Icons.Default.Settings, "settings") {
-            navController.navigate("settings") { launchSingleTop = true; restoreState = true }
-        },
-    )
+    val labelDashboard = stringResource(R.string.nav_dashboard)
+    val labelTransaction = stringResource(R.string.nav_transaction)
+    val labelReport = stringResource(R.string.nav_report)
+    val labelSettings = stringResource(R.string.nav_settings)
+
+    // FIX pelan/lebay: items jangan dibikin tiap recompose — remember sekali
+    val items = remember(labelDashboard, labelTransaction, labelReport, labelSettings) {
+        listOf(
+            BottomNavItem(labelDashboard, Icons.Default.Home, "dashboard"),
+            BottomNavItem(labelTransaction, Icons.Default.ShoppingCart, "transaction"),
+            BottomNavItem(labelReport, Icons.Default.Analytics, "report"),
+            BottomNavItem(labelSettings, Icons.Default.Settings, "settings"),
+        )
+    }
+
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
     val showBottomBar = currentRoute in bottomNavRoutes
@@ -60,7 +57,16 @@ fun MainScreen() {
                     items.forEach { item ->
                         NavigationBarItem(
                             selected = currentRoute == item.route,
-                            onClick = { item.onClick() },
+                            onClick = {
+                                navController.navigate(item.route) {
+                                    // FIX lebay: popUpTo + saveState biar gak numpuk backstack & gak reload
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            },
                             icon = { Icon(item.icon, contentDescription = item.label) },
                             label = { Text(item.label) },
                         )
@@ -78,9 +84,10 @@ fun MainScreen() {
                 DashboardScreen(
                     onNavigateToProduct = { navController.navigate("product") },
                     onNavigateToTable = { navController.navigate("table") },
-                    onAddToCart = { productId ->
-                        navController.navigate("transaction")
-                    },
+                    onAddToCart = { _ -> navController.navigate("transaction") {
+                        popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                        launchSingleTop = true; restoreState = true
+                    }},
                 )
             }
             composable("transaction") { TransactionScreen() }
@@ -130,5 +137,4 @@ data class BottomNavItem(
     val label: String,
     val icon: ImageVector,
     val route: String,
-    val onClick: () -> Unit,
 )

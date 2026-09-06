@@ -13,8 +13,8 @@ android {
         applicationId "com.kasirpro"
         minSdk 24      // Android 7.0 Nougat
         targetSdk 34   // Android 14
-        versionCode 7
-        versionName "1.1.6"
+        versionCode 8
+        versionName "1.1.7"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // Enable Room schema export for migration tracking
