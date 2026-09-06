@@ -3,7 +3,6 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 
 // ── KasirPro WARM EMBER — hangus terracotta + sage + peach cream ─────────────
 // Nada KosKeeper Terracotta tapi lebih dalam/pekat, bukan navy dingin.
@@ -57,14 +56,6 @@ private val DarkColors = darkColorScheme(
     onError = Color(0xFF4A1018),
 )
 
-private val WarmShapes = Shapes(
-    extraSmall = androidx.compose.foundation.shape.RoundedCornerShape(10.dp),
-    small = androidx.compose.foundation.shape.RoundedCornerShape(14.dp),
-    medium = androidx.compose.foundation.shape.RoundedCornerShape(18.dp),
-    large = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
-    extraLarge = androidx.compose.foundation.shape.RoundedCornerShape(32.dp),
-)
-
 @Composable
 fun Theme(
     themeMode: String = "system",
@@ -78,7 +69,6 @@ fun Theme(
     val colors = if (isDark) DarkColors else LightColors
     MaterialTheme(
         colorScheme = colors,
-        shapes = WarmShapes,
         content = content,
     )
 }
