@@ -109,8 +109,8 @@ fun ReportScreen(
 @Composable
 fun BarChart(entries: List<BarEntry>, modifier: Modifier = Modifier) {
     val max = (entries.maxOfOrNull { it.value } ?: 1f).takeIf { it > 0 } ?: 1f
-    val barColor = Color(0xFF0F2440)
-    val axisColor = Color(0xFFE5E7EB)
+    val barColor = Color(0xFFC2703E)
+    val axisColor = Color(0xFFEADCCB)
     Column(modifier = modifier) {
         Box(modifier = Modifier.weight(1f)) {
             Canvas(modifier = Modifier.fillMaxSize()) {

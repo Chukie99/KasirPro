@@ -53,9 +53,9 @@ fun TableScreen(
 @Composable
 fun TableCard(table: Table, onEdit: () -> Unit, onDelete: () -> Unit) {
     val color = when (table.status) {
-        "Terisi" -> Color(0xFF8B2635)
-        "Reservasi" -> Color(0xFFB7791F)
-        else -> Color(0xFF2E7D32)
+        "Terisi" -> Color(0xFFC25A4A)
+        "Reservasi" -> Color(0xFFC08A2D)
+        else -> Color(0xFF5A8F6A)
     }
     Card(Modifier.size(100.dp, 110.dp).padding(4.dp), shape = RoundedCornerShape(12.dp), elevation = CardDefaults.cardElevation(2.dp)) {
         Column(Modifier.padding(12.dp), horizontalAlignment = Alignment.CenterHorizontally) {
