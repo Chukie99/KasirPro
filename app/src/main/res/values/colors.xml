@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- ===== KasirPro WARM EMBER — inspired by KosKeeper Terracotta, beda nada ===== -->
-    <!-- Hangat boutique, bukan navy dingin. Burnt terracotta + sage kalem + peach cream -->
+    <!-- ===== KasirPro PREMIUM palette — Ink Navy + Warm Ivory + Brass ===== -->
+    <!-- Deep premium — kayak private banking / boutique POS -->
 
-    <!-- Primary: Burnt Terracotta — lebih dalam dari KosKeeper #D97C52 -->
-    <color name="primary">#C2703E</color>
-    <color name="primary_light">#FDE8D0</color>
-    <color name="primary_dark">#8C4E2A</color>
-    <color name="primary_container">#FDE8D0</color>
+    <!-- Primary: Ink Navy (deep, mahal — bukan biru cerah) -->
+    <color name="primary">#0F2440</color>
+    <color name="primary_light">#E8EDF3</color>
+    <color name="primary_dark">#0A1628</color>
+    <color name="primary_container">#122E57</color>
 
-    <!-- Secondary: Sage kalem — muted, bukan brass menyala -->
-    <color name="secondary">#6B8F7A</color>
-    <color name="secondary_light">#D8E8DC</color>
-    <color name="secondary_dark">#4A6B5A</color>
+    <!-- Secondary: Brass / Warm Gold (aksen mewah, bukan hijau murahan) -->
+    <color name="secondary">#C5A059</color>
+    <color name="secondary_light">#F5EEDD</color>
+    <color name="secondary_dark">#8C7040</color>
 
-    <!-- Tertiary: Warm Cacao -->
-    <color name="tertiary">#8C5A3C</color>
-    <color name="tertiary_light">#F5E0CC</color>
+    <!-- Tertiary: Warm Taupe (netral elegan) -->
+    <color name="tertiary">#8B7355</color>
+    <color name="tertiary_light">#F0E6D8</color>
 
-    <!-- Surfaces — Warm Peach pucat, bukan ivory dingin -->
-    <color name="surface">#FFFEFB</color>
-    <color name="background">#FFFBF3</color>
-    <color name="surface_variant">#F5E6D3</color>
+    <!-- Surfaces — Warm Ivory, bukan abu abu dingin -->
+    <color name="surface">#FFFFFF</color>
+    <color name="background">#FAF7F2</color>
+    <color name="surface_variant">#F2EFE9</color>
 
-    <!-- Text — coklat hangat, bukan hitam biru -->
-    <color name="text_primary">#3E2F24</color>
-    <color name="text_secondary">#8A6B5A</color>
-    <color name="text_tertiary">#B8A090</color>
+    <!-- Text — Ink, bukan hitam pekat -->
+    <color name="text_primary">#101828</color>
+    <color name="text_secondary">#667085</color>
+    <color name="text_tertiary">#98A2B3</color>
 
-    <!-- Status — warm, muted -->
-    <color name="error">#C25A4A</color>
-    <color name="success">#5A8F6A</color>
-    <color name="warning">#C08A2D</color>
+    <!-- Status -->
+    <color name="error">#8B2635</color>
+    <color name="success">#2E7D32</color>
+    <color name="warning">#B7791F</color>
 
-    <!-- Neutrals — warm line -->
-    <color name="outline">#EADCCB</color>
-    <color name="outline_variant">#F3E8D9</color>
-    <color name="shadow">#3E2F241A</color>
-    <color name="scrim">#3E2F2466</color>
+    <!-- Neutrals -->
+    <color name="outline">#E5E7EB</color>
+    <color name="outline_variant">#F3F4F6</color>
+    <color name="shadow">#0F24401A</color>
+    <color name="scrim">#0F244066</color>
 
-    <!-- Table status — warm tuned -->
-    <color name="table_empty">#5A8F6A</color>
-    <color name="table_occupied">#C25A4A</color>
-    <color name="table_reserved">#C08A2D</color>
+    <!-- Table status — muted premium (bukan merah menyala) -->
+    <color name="table_empty">#2E7D32</color>
+    <color name="table_occupied">#8B2635</color>
+    <color name="table_reserved">#B7791F</color>
 </resources>
